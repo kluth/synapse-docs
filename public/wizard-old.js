@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 });
 
 app.start(() => {
-  console.log('Server running on http://localhost:3000');
+  console.log('🚀 Server running on http://localhost:3000');
 });`
       },
       {
@@ -48,18 +48,27 @@ router.get('/users', (req, res) => {
 });
 
 router.post('/users', (req, res) => {
-  const user = req.body;
-  res.json({ user });
+  res.json({ message: 'User created' });
+});
+
+// Route with parameters
+router.get('/users/:id', (req, res) => {
+  res.json({ user: { id: req.params.id } });
+});
+
+// Middleware
+router.use((req, res, next) => {
+  console.log('Request:', req.method, req.url);
+  next();
 });`
       },
       {
         title: "Database Integration",
-        description: "Connect to your database with Synapse Database.",
-        content: "Synapse includes a powerful database layer with ORM capabilities, query builder, and model relationships.",
+        description: "Connect to your database using Synapse Database with ORM capabilities.",
+        content: "Synapse Database provides an in-memory database with ORM-like functionality, QueryBuilder, and Model classes.",
         codeExample: `import { Database, Model } from '@synapse/database';
 
-const db = new Database();
-
+// Define a model
 class User extends Model {
   static tableName = 'users';
   
@@ -70,61 +79,114 @@ class User extends Model {
   }
 }
 
-// Create a user
-const user = new User({ name: 'John', email: 'john@example.com' });
-await user.save();`
+// Initialize database
+const db = new Database();
+await db.connect();
+
+// Create and save a user
+const user = new User({
+  name: 'John Doe',
+  email: 'john@example.com'
+});
+
+await user.save();
+
+// Query users
+const users = await db.find('users', { name: 'John Doe' });`
       },
       {
-        title: "Authentication",
-        description: "Secure your application with Synapse Auth.",
-        content: "Implement robust authentication and authorization with OAuth2, JWT, and security features.",
+        title: "Authentication & Security",
+        description: "Implement secure authentication with Synapse Auth.",
+        content: "Synapse Auth provides comprehensive authentication and authorization with OAuth2, JWT, and security features.",
         codeExample: `import { AuthManager } from '@synapse/auth';
 
 const auth = new AuthManager({
-  secret: 'your-secret-key',
-  expiresIn: '24h'
+  secretKey: process.env.JWT_SECRET,
+  tokenExpiry: '24h'
 });
 
-// Register user
-await auth.register('user@example.com', 'password');
+// User registration
+app.post('/register', async (req, res) => {
+  const { email, password } = req.body;
+  
+  try {
+    const user = await auth.register(email, password);
+    const token = auth.generateToken(user);
+    
+    res.json({ user, token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
 
-// Login user
-const token = await auth.login('user@example.com', 'password');`
+// Protected route
+app.get('/profile', auth.authenticate, (req, res) => {
+  res.json({ user: req.user });
+});`
       },
       {
         title: "Templating Engine",
-        description: "Create dynamic content with Synapse Templating.",
-        content: "Build dynamic web pages with Synapse's powerful templating engine supporting variables, conditionals, and loops.",
+        description: "Create dynamic views with Synapse Templating.",
+        content: "Synapse includes a powerful templating engine that supports .webml files with variables, conditionals, and loops.",
         codeExample: `import { TemplateEngine } from '@synapse/templating';
 
-const engine = new TemplateEngine();
+const templateEngine = new TemplateEngine();
 
-const template = \`
-<h1>Welcome {{user.name}}!</h1>
-{% if user.isAdmin %}
-  <p>Admin panel access granted</p>
-{% endif %}
-\`;
+// Render a template
+const html = await templateEngine.render('welcome.webml', {
+  title: 'Welcome to Synapse',
+  user: { name: 'John Doe' },
+  features: ['Zero Dependencies', 'TypeScript', 'ORM']
+});
 
-const html = engine.render(template, { user: { name: 'John', isAdmin: true } });`
+// Template file: welcome.webml
+/*
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>Hello, {{user.name}}!</h1>
+    <ul>
+        {% for feature in features %}
+        <li>{{feature}}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+*/`
       },
       {
         title: "Testing Framework",
-        description: "Test your application with Synapse Testing.",
-        content: "Ensure your code quality with Synapse's comprehensive testing framework including mocks, spies, and coverage tools.",
-        codeExample: `import { TestRunner, Mock } from '@synapse/testing';
+        description: "Write comprehensive tests with Synapse Testing.",
+        content: "Synapse Testing provides a complete testing framework with mocks, spies, stubs, and 100% coverage tools.",
+        codeExample: `import { TestRunner, Mock, Spy } from '@synapse/testing';
 
-const runner = new TestRunner();
+const testRunner = new TestRunner();
 
-runner.test('User creation', async () => {
-  const mockDb = new Mock();
-  const user = new User({ name: 'Test' });
-  
-  expect(user.name).toBe('Test');
-  expect(mockDb.save).toHaveBeenCalled();
+// Basic test
+testRunner.test('User creation', async () => {
+  const user = new User({ name: 'John', email: 'john@test.com' });
+  expect(user.name).toBe('John');
+  expect(user.email).toBe('john@test.com');
 });
 
-runner.run();`
+// Test with mocks
+testRunner.test('API endpoint', async () => {
+  const mockReq = Mock.createRequest({ body: { name: 'John' } });
+  const mockRes = Mock.createResponse();
+  
+  await userController.create(mockReq, mockRes);
+  
+  expect(mockRes.status).toHaveBeenCalledWith(201);
+  expect(mockRes.json).toHaveBeenCalledWith(
+    expect.objectContaining({ name: 'John' })
+  );
+});
+
+// Run tests
+testRunner.run();`
       },
       {
         title: "Advanced Features",
@@ -163,61 +225,101 @@ console.log(response);`
         title: "Performance Optimization",
         description: "Optimize your Synapse application for production.",
         content: "Synapse includes built-in performance monitoring, caching, and optimization features.",
-        codeExample: `import { PerformanceMonitor } from '@synapse/core';
+        codeExample: `import { Server } from '@synapse/core';
+import { CacheManager } from '@synapse/core';
 
-const monitor = new PerformanceMonitor();
+const app = new Server({
+  port: 3000,
+  performanceMonitoring: true,
+  caching: {
+    enabled: true,
+    strategy: 'lru',
+    maxSize: 1000
+  }
+});
 
-// Enable caching
-app.use(monitor.cache());
-
-// Monitor performance
-monitor.on('slow-request', (data) => {
-  console.log('Slow request detected:', data);
+// Enable caching for expensive operations
+app.get('/expensive-data', async (req, res) => {
+  const cacheKey = 'expensive-data';
+  let data = await app.cache.get(cacheKey);
+  
+  if (!data) {
+    data = await performExpensiveOperation();
+    await app.cache.set(cacheKey, data, 3600); // 1 hour
+  }
+  
+  res.json(data);
 });`
       },
       {
         title: "Deployment",
         description: "Deploy your Synapse application to production.",
-        content: "Learn how to deploy your Synapse application with Docker, CI/CD, and monitoring.",
-        codeExample: `# Dockerfile
+        content: "Learn how to deploy your Synapse application using various deployment strategies.",
+        codeExample: `// Docker deployment
 FROM node:18-alpine
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
-COPY . .
+RUN npm ci --only=production
+COPY dist/ ./dist/
 EXPOSE 3000
-CMD ["npm", "start"]`
+CMD ["node", "dist/index.js"]
+
+// Environment configuration
+const config = {
+  port: process.env.PORT || 3000,
+  database: {
+    url: process.env.DATABASE_URL
+  },
+  auth: {
+    secretKey: process.env.JWT_SECRET
+  }
+};`
       },
       {
-        title: "Best Practices",
-        description: "Follow Synapse best practices for production applications.",
-        content: "Learn about security, performance, and maintainability best practices for Synapse applications.",
-        codeExample: `// Security best practices
-app.use(helmet());
-app.use(rateLimit());
+        title: "Monitoring & Debugging",
+        description: "Monitor and debug your Synapse application.",
+        content: "Synapse provides comprehensive monitoring, logging, and debugging tools.",
+        codeExample: `import { Logger, MetricsCollector } from '@synapse/core';
 
-// Error handling
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ error: 'Internal server error' });
-});`
+const logger = new Logger({
+  level: 'info',
+  format: 'json'
+});
+
+const metrics = new MetricsCollector();
+
+// Logging
+logger.info('Application started', { port: 3000 });
+logger.error('Database connection failed', { error: err.message });
+
+// Metrics
+metrics.increment('requests.total');
+metrics.timing('request.duration', duration);
+metrics.gauge('memory.usage', process.memoryUsage().heapUsed);`
       },
       {
         title: "Congratulations!",
         description: "You're ready to build amazing applications with Synapse!",
-        content: "You've completed the Synapse getting started guide. You now have all the knowledge to build powerful, scalable applications.",
-        codeExample: `// Your first Synapse app
+        content: "You've learned the fundamentals of Synapse framework. Now you can build robust, scalable applications with zero dependencies.",
+        codeExample: `// Your complete Synapse application
 import { Server } from '@synapse/core';
 import { Router } from '@synapse/routing';
 import { Database } from '@synapse/database';
+import { AuthManager } from '@synapse/auth';
+import { TemplateEngine } from '@synapse/templating';
 
-const app = new Server();
+const app = new Server({ port: 3000 });
 const router = new Router();
 const db = new Database();
+const auth = new AuthManager();
+const templates = new TemplateEngine();
 
-// Build something amazing!
+// Your amazing application logic here
+app.use(router);
+await db.connect();
+
 app.start(() => {
-  console.log('Your Synapse app is running!');
+  console.log('🎉 Your Synapse app is running!');
 });`
       }
     ];
@@ -227,8 +329,8 @@ app.start(() => {
   
   init() {
     this.renderStep();
-    this.updateProgress();
     this.bindEvents();
+    this.updateProgress();
   }
   
   renderStep() {
@@ -263,7 +365,7 @@ app.start(() => {
       if (e.target.classList.contains('next-step')) {
         this.nextStep();
       } else if (e.target.classList.contains('prev-step')) {
-        this.prevStep();
+        this.previousStep();
       } else if (e.target.classList.contains('complete-wizard')) {
         this.completeWizard();
       }
@@ -271,18 +373,24 @@ app.start(() => {
   }
   
   bindCopyButtons() {
-    document.addEventListener('click', (e) => {
-      if (e.target.classList.contains('copy-code')) {
-        const codeBlock = e.target.previousElementSibling.querySelector('code');
-        if (codeBlock) {
-          navigator.clipboard.writeText(codeBlock.textContent).then(() => {
-            e.target.textContent = 'Copied!';
-            setTimeout(() => {
-              e.target.textContent = 'Copy Code';
-            }, 2000);
-          });
+    document.querySelectorAll('.copy-code').forEach(button => {
+      button.addEventListener('click', async function() {
+        const codeBlock = this.parentElement.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        try {
+          await navigator.clipboard.writeText(text);
+          this.textContent = 'Copied!';
+          this.style.background = 'var(--success-green)';
+          
+          setTimeout(() => {
+            this.textContent = 'Copy Code';
+            this.style.background = '';
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy text: ', err);
         }
-      }
+      });
     });
   }
   
@@ -295,7 +403,7 @@ app.start(() => {
     }
   }
   
-  prevStep() {
+  previousStep() {
     if (this.currentStep > 0) {
       this.currentStep--;
       this.renderStep();
@@ -393,7 +501,7 @@ style.textContent = `
       transform: translateY(0);
     }
     40% {
-      transform: translateY(-10px);
+      transform: translateY(-20px);
     }
     60% {
       transform: translateY(-10px);
