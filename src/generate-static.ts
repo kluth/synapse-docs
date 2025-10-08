@@ -14,7 +14,7 @@ async function generateStaticDocumentation() {
   // Generate home page
   const pages = docsService['database'].find('documentation_pages', { isPublished: true });
   const homeHtml = await docsService['templateEngine'].render(docsService['getHomeTemplate'](), {
-    pages,
+    packages: [],
     title: 'Synapse Framework Documentation',
     description: 'Complete documentation for the Synapse TypeScript framework'
   });
@@ -24,10 +24,9 @@ async function generateStaticDocumentation() {
   
   // Generate individual pages
   for (const page of pages) {
-    const pageHtml = await docsService['templateEngine'].render(docsService['getPageTemplate'](), {
-      page,
-      title: page.title,
-      content: page.content
+    const pageHtml = await docsService['templateEngine'].render(docsService['getPackageTemplate'](), {
+      package: { name: page.title, description: page.content },
+      title: page.title
     });
     
     await writeFile(join(outputDir, `${page.slug}.html`), pageHtml);

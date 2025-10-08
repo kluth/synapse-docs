@@ -4,12 +4,15 @@ async function startDocumentationServer() {
     console.log('🚀 Starting Synapse Documentation Server...');
     const docsService = new DocumentationService();
     try {
+        await docsService.initialize();
         await docsService.start();
         console.log('✅ Documentation server is running!');
         console.log('📖 Visit: http://localhost:3001');
-        console.log('🔍 Search: http://localhost:3001/api/search?q=your-query');
+        console.log('🎯 Getting Started: http://localhost:3001/getting-started');
         console.log('📚 Examples: http://localhost:3001/examples');
         console.log('🔧 API Docs: http://localhost:3001/api');
+        console.log('🏗️ Design Patterns: http://localhost:3001/patterns');
+        console.log('🧹 Clean Code: http://localhost:3001/clean-code');
     }
     catch (error) {
         console.error('❌ Failed to start documentation server:', error);
