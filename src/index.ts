@@ -2102,7 +2102,7 @@ Synapse aims for 100% test coverage across all packages.
                     </div>
                     <div class="feature">
                         <h4>🧩 Modular Architecture</h4>
-                        <p>21 independent packages for different capabilities, use only what you need</p>
+                        <p>22 independent packages for different capabilities, use only what you need</p>
                     </div>
                     <div class="feature">
                         <h4>🚀 Cutting-Edge Features</h4>
