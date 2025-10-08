@@ -196,7 +196,7 @@ testRunner.run();`
 import { GraphQLServer } from '@synapse/graphql';
 
 const server = new GraphQLServer({
-  typeDefs: `
+  typeDefs: \`
     type User {
       id: ID!
       name: String!
@@ -206,7 +206,7 @@ const server = new GraphQLServer({
     type Query {
       users: [User]
     }
-  `,
+  \`,
   resolvers: {
     Query: {
       users: () => db.find('users')
