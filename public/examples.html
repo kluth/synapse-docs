@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Examples - Synapse Framework</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background: #f8fafc; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { font-size: 2.5em; margin-bottom: 15px; color: #2d3748; }
+        .header p { font-size: 1.1em; color: #718096; }
+        .examples { display: grid; gap: 30px; }
+        .example { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .example h3 { margin: 0 0 15px 0; color: #2d3748; }
+        .example p { margin: 0 0 20px 0; color: #718096; line-height: 1.6; }
+        .example pre { background: #f7fafc; padding: 20px; border-radius: 8px; overflow-x: auto; margin: 20px 0; }
+        .example .meta { display: flex; gap: 15px; margin-bottom: 20px; }
+        .example .meta span { background: #e2e8f0; padding: 4px 8px; border-radius: 4px; font-size: 0.9em; color: #4a5568; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Code Examples</h1>
+            <p>Practical examples for using Synapse framework</p>
+        </div>
+        
+        <div class="examples">
+            
+            <div class="example">
+                <h3>Basic Server Setup</h3>
+                <p>Create a simple HTTP server with Synapse</p>
+                <div class="meta">
+                    <span>typescript</span>
+                    <span>Core</span>
+                    <span>@synapse/core</span>
+                </div>
+                <pre><code>import { Server } from '@synapse/core';
+import { Router } from '@synapse/routing';
+
+const server = new Server({ port: 3000 });
+const router = new Router();
+
+router.get('/', (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.end('<h1>Hello from Synapse!</h1>');
+});
+
+server.useRouter(router);
+await server.start();</code></pre>
+            </div>
+            
+            <div class="example">
+                <h3>AI Integration with Web AI</h3>
+                <p>Use Google Web AI for browser-based AI generation</p>
+                <div class="meta">
+                    <span>typescript</span>
+                    <span>AI</span>
+                    <span>@synapse/ai</span>
+                </div>
+                <pre><code>import { AIService } from '@synapse/ai';
+
+const ai = new AIService({
+  webAI: { enableBrowserAI: true }
+});
+
+// Initialize Web AI
+await ai.initializeWebAI('your-google-ai-key');
+
+// Generate text using browser AI
+const response = await ai.generateText(
+  'Write a story about a robot learning to paint',
+  'gemini-pro',
+  { useWebAI: true }
+);
+
+console.log(response.content);</code></pre>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "@synapse/core": ["../../packages/core/src"],
+      "@synapse/routing": ["../../packages/routing/src"],
+      "@synapse/database": ["../../packages/database/src"],
+      "@synapse/auth": ["../../packages/auth/src"],
+      "@synapse/templating": ["../../packages/templating/src"],
+      "@synapse/graphql": ["../../packages/graphql/src"],
+      "@synapse/api-docs": ["../../packages/api-docs/src"],
+      "@synapse/file-upload": ["../../packages/file-upload/src"],
+      "@synapse/email": ["../../packages/email/src"],
+      "@synapse/notifications": ["../../packages/notifications/src"],
+      "@synapse/ai": ["../../packages/ai/src"],
+      "@synapse/blockchain": ["../../packages/blockchain/src"],
+      "@synapse/collaboration": ["../../packages/collaboration/src"],
+      "@synapse/workflow": ["../../packages/workflow/src"],
+      "@synapse/pwa": ["../../packages/pwa/src"],
+      "@synapse/voice": ["../../packages/voice/src"],
+      "@synapse/webassembly": ["../../packages/webassembly/src"],
+      "@synapse/webrtc": ["../../packages/webrtc/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
