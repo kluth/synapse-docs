@@ -93,6 +93,29 @@ async function generateStaticDocumentation() {
   await writeFile(join(outputDir, 'patterns.html'), patternsHtml);
   console.log('✅ Generated patterns.html');
   
+  // Generate individual package pages
+  const packagesDir = join(outputDir, 'packages');
+  await mkdir(packagesDir, { recursive: true });
+  
+  for (const pkg of allPackages) {
+    const packageName = pkg.name.replace('@synapse/', '');
+    const featuresContent = docsService['generatePackageFeatures'](pkg.features);
+    const classesContent = docsService['generatePackageClasses'](pkg.classes);
+    const examplesContent = docsService['generatePackageExamples'](pkg.examples);
+    
+    const packageHtml = await docsService['templateEngine'].render(docsService['getPackageTemplate'](), {
+      package: pkg,
+      featuresContent,
+      classesContent,
+      examplesContent,
+      title: `${pkg.name} - Synapse Framework`,
+      description: pkg.description
+    });
+    
+    await writeFile(join(packagesDir, `${packageName}.html`), packageHtml);
+    console.log(`✅ Generated packages/${packageName}.html`);
+  }
+  
   console.log('🎉 Static documentation generated successfully!');
   console.log(`📁 Output directory: ${outputDir}`);
 }

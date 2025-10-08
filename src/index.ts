@@ -2286,6 +2286,117 @@ await runner.run();`,
     `;
   }
 
+  private getPackageTemplate(): string {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>{{package.name}}</h1>
+            <p>{{package.description}}</p>
+            <div class="package-meta">
+                <span class="version">v{{package.version}}</span>
+                <span class="coverage">{{package.testCoverage}}% coverage</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="package-details">
+                <div class="package-info">
+                    <h2>Package Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>Category:</strong> {{package.category}}
+                        </div>
+                        <div class="info-item">
+                            <strong>Dependencies:</strong> {{package.dependencies.join(', ')}}
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> {{package.performance.bundleSize}}
+                        </div>
+                        <div class="info-item">
+                            <strong>Load Time:</strong> {{package.performance.loadTime}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features-section">
+                    <h2>Features</h2>
+                    <div class="features-grid">
+                        {{featuresContent}}
+                    </div>
+                </div>
+
+                <div class="classes-section">
+                    <h2>Classes</h2>
+                    {{classesContent}}
+                </div>
+
+                <div class="examples-section">
+                    <h2>Examples</h2>
+                    {{examplesContent}}
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="../interactive.js"></script>
+</body>
+</html>`;
+  }
+
+  private generatePackageFeatures(features: string[]): string {
+    return features.map(feature => `<span class="feature-tag">${feature}</span>`).join('');
+  }
+
+  private generatePackageClasses(classes: DocumentationClass[]): string {
+    return classes.map(cls => `
+      <div class="class-card">
+        <h3>${cls.name}</h3>
+        <p>${cls.description}</p>
+        <div class="class-meta">
+          <span class="design-patterns">${cls.designPatterns.join(', ')}</span>
+          <span class="coverage">${cls.testCoverage}% coverage</span>
+        </div>
+        <div class="methods">
+          <h4>Methods</h4>
+          ${cls.methods.map(method => `
+            <div class="method">
+              <code>${method.name}(${method.parameters.map(p => `${p.name}: ${p.type}`).join(', ')})</code>
+              <p>${method.description}</p>
+            </div>
+          `).join('')}
+        </div>
+        <div class="properties">
+          <h4>Properties</h4>
+          ${cls.properties.map(prop => `
+            <div class="property">
+              <code>${prop.name}: ${prop.type}</code>
+              <p>${prop.description}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  private generatePackageExamples(examples: string[]): string {
+    return examples.map(example => `
+      <div class="example-code">
+        <pre><code class="language-typescript">${example}</code></pre>
+        <button class="btn btn-secondary copy-code">Copy Code</button>
+      </div>
+    `).join('');
+  }
+
   private generateAPIContent(packages: DocumentationPackage[]): string {
     return packages.map(pkg => {
       const classes = pkg.classes.map(cls => {
@@ -2524,83 +2635,6 @@ await runner.run();`,
 </html>`;
   }
 
-  private getPackageTemplate(): string {
-    return `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
-    <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-    <header class="header">
-        <div class="container">
-            <h1>{{package.name}}</h1>
-            <p>{{package.description}}</p>
-            <div class="package-meta">
-                <span class="version">v{{package.version}}</span>
-                <span class="coverage">{{package.testCoverage}}% test coverage</span>
-                <span class="bundle-size">{{package.performance.bundleSize}} bundle size</span>
-            </div>
-        </div>
-    </header>
-
-    <main class="main">
-        <div class="container">
-            <div class="package-content">
-                <section class="classes">
-                    <h2>Classes</h2>
-                    {% for class in package.classes %}
-                    <div class="class-card">
-                        <h3>{{class.name}}</h3>
-                        <p>{{class.description}}</p>
-                        <div class="class-meta">
-                            <span class="design-pattern">{{class.designPattern}}</span>
-                            <span class="coverage">{{class.testCoverage}}% coverage</span>
-                        </div>
-                        
-                        <div class="methods">
-                            <h4>Methods</h4>
-                            {% for method in class.methods %}
-                            <div class="method">
-                                <code>{{method.name}}({{method.parameters.map(p => p.name + ': ' + p.type).join(', ')}}){{method.isAsync ? ': Promise<' + method.returnType + '>' : ': ' + method.returnType}}</code>
-                                <p>{{method.description}}</p>
-                                <div class="method-meta">
-                                    <span class="complexity">{{method.complexity}}</span>
-                                    {% if method.isAsync %}<span class="async">async</span>{% endif %}
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endfor %}
-                </section>
-
-                <section class="examples">
-                    <h2>Examples</h2>
-                    {% for example in package.examples %}
-                    <div class="example-card">
-                        <h3>{{example.title}}</h3>
-                        <p>{{example.description}}</p>
-                        <div class="example-meta">
-                            <span class="difficulty">{{example.difficulty}}</span>
-                            <span class="time">{{example.estimatedTime}} min</span>
-                            {% if example.isRunnable %}<span class="runnable">Runnable</span>{% endif %}
-                        </div>
-                        <pre><code class="language-{{example.language}}">{{example.code}}</code></pre>
-                        {% if example.isRunnable %}
-                        <button class="btn btn-primary run-example">Run Example</button>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </section>
-            </div>
-        </div>
-    </main>
-</body>
-</html>`;
-  }
 
   private getAPITemplate(): string {
     return `<!DOCTYPE html>
