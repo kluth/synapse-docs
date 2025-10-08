@@ -6,7 +6,7 @@ yarn-error.log*
 
 # Build outputs
 dist/
-public/
+# public/ - commented out for GitHub Pages deployment
 
 # Environment variables
 .env
