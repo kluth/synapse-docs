@@ -47,8 +47,9 @@ async function generateStaticDocumentation() {
     await writeFile(join(outputDir, 'examples.html'), examplesHtml);
     console.log('✅ Generated examples.html');
     // Generate API page
+    const apiContent = docsService['generateAPIContent'](allPackages);
     const apiHtml = await docsService['templateEngine'].render(docsService['getAPITemplate'](), {
-        packages: allPackages,
+        apiContent,
         title: 'API Reference',
         description: 'Complete API documentation for all Synapse packages'
     });

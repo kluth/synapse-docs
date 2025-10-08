@@ -1653,9 +1653,10 @@ Synapse aims for 100% test coverage across all packages.
         });
         // API reference
         this.server.get('/api', async (req, res) => {
-            const apiRef = await this.getAPIReference();
+            const packages = Array.from(this.packages.values());
+            const apiContent = this.generateAPIContent(packages);
             const html = await this.templateEngine.render(this.getAPITemplate(), {
-                packages: apiRef.packages,
+                apiContent,
                 title: 'API Reference - Synapse Framework'
             });
             res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -1753,6 +1754,58 @@ Synapse aims for 100% test coverage across all packages.
       </div>
     `;
     }
+    generateAPIContent(packages) {
+        return packages.map(pkg => {
+            const classes = pkg.classes.map(cls => {
+                const methods = cls.methods.map(method => {
+                    const params = method.parameters.map(p => `${p.name}: ${p.type}`).join(', ');
+                    const returnType = method.isAsync ? `Promise<${method.returnType}>` : method.returnType;
+                    return `
+            <div class="method">
+              <code>${method.name}(${params}): ${returnType}</code>
+              <p>${method.description}</p>
+            </div>
+          `;
+                }).join('');
+                return `
+          <div class="class">
+            <h4>${cls.name}</h4>
+            <p>${cls.description}</p>
+            <div class="methods">
+              <h5>Methods</h5>
+              ${methods}
+            </div>
+          </div>
+        `;
+            }).join('');
+            return `
+        <section class="package-section">
+          <h2>${pkg.name}</h2>
+          <p>${pkg.description}</p>
+          
+          <div class="package-info">
+            <div class="info-item">
+              <strong>Version:</strong> ${pkg.version}
+            </div>
+            <div class="info-item">
+              <strong>Category:</strong> ${pkg.category}
+            </div>
+            <div class="info-item">
+              <strong>Test Coverage:</strong> ${pkg.testCoverage}%
+            </div>
+            <div class="info-item">
+              <strong>Bundle Size:</strong> ${pkg.performance.bundleSize}
+            </div>
+          </div>
+
+          <div class="classes">
+            <h3>Classes</h3>
+            ${classes}
+          </div>
+        </section>
+      `;
+        }).join('');
+    }
     getHomeTemplate() {
         return `<!DOCTYPE html>
 <html lang="en">
@@ -1761,8 +1814,8 @@ Synapse aims for 100% test coverage across all packages.
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
     <meta name="description" content="{{description}}">
-    <link rel="stylesheet" href="/styles.css">
-    <script src="/interactive.js"></script>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./interactive.js"></script>
 </head>
 <body>
     <header class="header">
@@ -1852,7 +1905,7 @@ Synapse aims for 100% test coverage across all packages.
                     </div>
                     <div class="feature">
                         <h4>🧩 Modular Architecture</h4>
-                        <p>21 independent packages for different capabilities, use only what you need</p>
+                        <p>22 independent packages for different capabilities, use only what you need</p>
                     </div>
                     <div class="feature">
                         <h4>🚀 Cutting-Edge Features</h4>
@@ -1886,7 +1939,7 @@ Synapse aims for 100% test coverage across all packages.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
     <script src="/wizard.js"></script>
 </head>
 <body>
@@ -1916,24 +1969,15 @@ Synapse aims for 100% test coverage across all packages.
                             {{wizard.steps[wizard.currentStep].content}}
                         </div>
 
-                        {% if wizard.steps[wizard.currentStep].codeExample %}
                         <div class="code-example">
                             <h4>Code Example:</h4>
-                            <pre><code>{{wizard.steps[wizard.currentStep].codeExample}}</code></pre>
+                            <pre><code>{{wizard.steps[wizard.currentStep].codeExample || 'No code example available'}}</code></pre>
                             <button class="btn btn-secondary copy-code">Copy Code</button>
                         </div>
-                        {% endif %}
 
                         <div class="step-actions">
-                            {% if wizard.currentStep > 0 %}
                             <button class="btn btn-outline prev-step">Previous</button>
-                            {% endif %}
-                            
-                            {% if wizard.currentStep < wizard.steps.length - 1 %}
                             <button class="btn btn-primary next-step">Next Step</button>
-                            {% else %}
-                            <button class="btn btn-success complete-wizard">Complete</button>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -1950,7 +1994,7 @@ Synapse aims for 100% test coverage across all packages.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <header class="header">
@@ -2027,7 +2071,7 @@ Synapse aims for 100% test coverage across all packages.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <header class="header">
@@ -2040,47 +2084,7 @@ Synapse aims for 100% test coverage across all packages.
     <main class="main">
         <div class="container">
             <div class="api-content">
-                {% for package in packages %}
-                <section class="package-section">
-                    <h2>{{package.name}}</h2>
-                    <p>{{package.description}}</p>
-                    
-                    <div class="package-info">
-                        <div class="info-item">
-                            <strong>Version:</strong> {{package.version}}
-                        </div>
-                        <div class="info-item">
-                            <strong>Category:</strong> {{package.category}}
-                        </div>
-                        <div class="info-item">
-                            <strong>Test Coverage:</strong> {{package.testCoverage}}%
-                        </div>
-                        <div class="info-item">
-                            <strong>Bundle Size:</strong> {{package.performance.bundleSize}}
-                        </div>
-                    </div>
-
-                    <div class="classes">
-                        <h3>Classes</h3>
-                        {% for class in package.classes %}
-                        <div class="class">
-                            <h4>{{class.name}}</h4>
-                            <p>{{class.description}}</p>
-                            
-                            <div class="methods">
-                                <h5>Methods</h5>
-                                {% for method in class.methods %}
-                                <div class="method">
-                                    <code>{{method.name}}({{method.parameters.map(p => p.name + ': ' + p.type).join(', ')}}){{method.isAsync ? ': Promise<' + method.returnType + '>' : ': ' + method.returnType}}</code>
-                                    <p>{{method.description}}</p>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </section>
-                {% endfor %}
+                {{apiContent}}
             </div>
         </div>
     </main>
@@ -2094,7 +2098,7 @@ Synapse aims for 100% test coverage across all packages.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <header class="header">
@@ -2149,7 +2153,7 @@ Synapse aims for 100% test coverage across all packages.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <header class="header">
@@ -2181,7 +2185,7 @@ Synapse aims for 100% test coverage across all packages.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <header class="header">
@@ -2213,7 +2217,7 @@ Synapse aims for 100% test coverage across all packages.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <header class="header">
@@ -2240,7 +2244,7 @@ Synapse aims for 100% test coverage across all packages.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <header class="header">
@@ -2267,7 +2271,7 @@ Synapse aims for 100% test coverage across all packages.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <header class="header">
@@ -2294,7 +2298,7 @@ Synapse aims for 100% test coverage across all packages.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <header class="header">
@@ -2321,13 +2325,13 @@ Synapse aims for 100% test coverage across all packages.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Not Found - Synapse Framework</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <div class="error-page">
         <h1>404</h1>
         <p>Page not found</p>
-        <a href="/" class="btn btn-primary">← Back to Documentation</a>
+        <a href="./" class="btn btn-primary">← Back to Documentation</a>
     </div>
 </body>
 </html>`;
@@ -2415,7 +2419,7 @@ class SimpleServer {
       <body>
         <h1>404 - Page Not Found</h1>
         <p>The requested page "${path}" was not found.</p>
-        <a href="/">← Back to Documentation</a>
+        <a href="./">← Back to Documentation</a>
       </body>
       </html>
     `);
