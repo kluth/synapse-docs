@@ -1940,7 +1940,7 @@ Synapse aims for 100% test coverage across all packages.
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
     <link rel="stylesheet" href="./styles.css">
-    <script src="/wizard.js"></script>
+    <script src="./wizard.js"></script>
 </head>
 <body>
     <header class="header">
