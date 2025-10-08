@@ -5,67 +5,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Synapse Framework Documentation</title>
     <meta name="description" content="Complete documentation for the Synapse TypeScript framework">
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background: #f8fafc; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-        .header { text-align: center; margin-bottom: 60px; }
-        .header h1 { font-size: 3em; margin-bottom: 20px; color: #2d3748; }
-        .header p { font-size: 1.2em; color: #718096; max-width: 600px; margin: 0 auto; }
-        .nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
-        .nav-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
-        .nav-card:hover { transform: translateY(-4px); }
-        .nav-card h3 { margin: 0 0 15px 0; color: #2d3748; font-size: 1.5em; }
-        .nav-card p { margin: 0 0 20px 0; color: #718096; line-height: 1.6; }
-        .nav-card a { color: #667eea; text-decoration: none; font-weight: 600; }
-        .nav-card a:hover { text-decoration: underline; }
-        .features { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .features h2 { margin: 0 0 30px 0; color: #2d3748; }
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .feature { padding: 20px; border-left: 4px solid #667eea; background: #f7fafc; }
-        .feature h4 { margin: 0 0 10px 0; color: #2d3748; }
-        .feature p { margin: 0; color: #718096; font-size: 0.9em; }
-    </style>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/interactive.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
+    <header class="header">
+        <div class="container">
             <h1>🚀 Synapse Framework</h1>
-            <p>Complete documentation for the Synapse TypeScript framework</p>
+            <p class="subtitle">The most powerful TypeScript framework with zero dependencies</p>
+            <nav class="main-nav">
+                <a href="/getting-started" class="nav-link primary">Get Started</a>
+                <a href="/api" class="nav-link">API Reference</a>
+                <a href="/examples" class="nav-link">Examples</a>
+                <a href="/patterns" class="nav-link">Design Patterns</a>
+            </nav>
         </div>
-        
-        <div class="nav">
-            
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <section class="hero">
+                <h2>Complete Documentation for All 21 Packages</h2>
+                <p>Comprehensive guides, interactive examples, and step-by-step tutorials for every aspect of the Synapse framework.</p>
+                <div class="cta-buttons">
+                    <a href="/getting-started" class="btn btn-primary">Start Building</a>
+                    <a href="/examples" class="btn btn-secondary">View Examples</a>
+                </div>
+            </section>
+
+            <section class="packages-grid">
+                <h3>Core Packages</h3>
+                <div class="package-cards">
+                    
+                        </div>
+                        <a href="/packages/{{package.name.replace('@synapse/', '')}}" class="btn btn-outline">View Docs</a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                <h3>Enterprise Packages</h3>
+                <div class="package-cards">
+                    
+                        </div>
+                        <a href="/packages/{{package.name.replace('@synapse/', '')}}" class="btn btn-outline">View Docs</a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                <h3>Next-Generation Packages</h3>
+                <div class="package-cards">
+                    
+                        </div>
+                        <a href="/packages/{{package.name.replace('@synapse/', '')}}" class="btn btn-outline">View Docs</a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                <h3>Futuristic Packages</h3>
+                <div class="package-cards">
+                    
+                        </div>
+                        <a href="/packages/{{package.name.replace('@synapse/', '')}}" class="btn btn-outline">View Docs</a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- UI Components Section -->
+            <section class="ui-showcase">
+                <h3>🎨 Beautiful UI Components</h3>
+                <p>Create stunning user interfaces with our comprehensive UI component library featuring 600+ bulletproof components.</p>
+                <div class="ui-features">
+                    <div class="ui-feature">
+                        <h4>🚀 Zero Dependencies</h4>
+                        <p>Pure TypeScript/HTML/CSS implementation with no external dependencies</p>
+                    </div>
+                    <div class="ui-feature">
+                        <h4>♿ Fully Accessible</h4>
+                        <p>WCAG 2.1 AA compliant components with full keyboard navigation</p>
+                    </div>
+                    <div class="ui-feature">
+                        <h4>📱 Responsive Design</h4>
+                        <p>Mobile-first approach with comprehensive breakpoint system</p>
+                    </div>
+                    <div class="ui-feature">
+                        <h4>🎨 Theme Support</h4>
+                        <p>Built-in theming with CSS custom properties and dark mode</p>
+                    </div>
+                </div>
+                <div class="ui-cta">
+                    <a href="/packages/ui" class="btn btn-primary">Explore UI Components</a>
+                    <a href="https://github.com/kluth/synapse-ui" class="btn btn-outline" target="_blank">View on GitHub</a>
+                </div>
+            </section>
+
+            <section class="features">
+                <h3>Why Choose Synapse?</h3>
+                <div class="feature-grid">
+                    <div class="feature">
+                        <h4>🎯 Zero Dependencies</h4>
+                        <p>Built with pure TypeScript and Node.js APIs for maximum reliability and performance</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🔒 100% Type Safe</h4>
+                        <p>Complete TypeScript support throughout the entire framework with full type inference</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🧩 Modular Architecture</h4>
+                        <p>21 independent packages for different capabilities, use only what you need</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🚀 Cutting-Edge Features</h4>
+                        <p>AI/ML, blockchain, PWA, voice interfaces, WebAssembly, WebRTC, and more</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🏢 Enterprise Ready</h4>
+                        <p>Production-grade security, monitoring, scalability, and microservices support</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🧪 Test-Driven Development</h4>
+                        <p>Built-in testing framework with 100% coverage goal and TDD best practices</p>
+                    </div>
+                </div>
+            </section>
         </div>
-        
-        <div class="features">
-            <h2>🌟 Why Choose Synapse?</h2>
-            <div class="feature-grid">
-                <div class="feature">
-                    <h4>Zero Dependencies</h4>
-                    <p>Built with pure TypeScript and Node.js APIs for maximum reliability</p>
-                </div>
-                <div class="feature">
-                    <h4>100% Type Safe</h4>
-                    <p>Complete TypeScript support throughout the entire framework</p>
-                </div>
-                <div class="feature">
-                    <h4>Modular Architecture</h4>
-                    <p>21 independent packages for different capabilities</p>
-                </div>
-                <div class="feature">
-                    <h4>Cutting-Edge Features</h4>
-                    <p>AI, blockchain, PWA, voice interfaces, WebAssembly, WebRTC</p>
-                </div>
-                <div class="feature">
-                    <h4>Enterprise Ready</h4>
-                    <p>Production-grade security, monitoring, and scalability</p>
-                </div>
-                <div class="feature">
-                    <h4>Community Driven</h4>
-                    <p>Open source with active community support</p>
-                </div>
-            </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Synapse Framework. Built with Synapse itself to showcase its power.</p>
         </div>
-    </div>
+    </footer>
 </body>
 </html>

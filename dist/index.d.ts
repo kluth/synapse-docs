@@ -188,6 +188,7 @@ declare class DocumentationService {
     private initializeVoicePackage;
     private initializeWebAssemblyPackage;
     private initializeWebRTCPackage;
+    private initializeUIPackage;
     private initializeCLIPackage;
     private initializeGettingStartedWizard;
     getDocumentedPackages(): Promise<string[]>;
