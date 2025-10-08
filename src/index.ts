@@ -1830,7 +1830,235 @@ Synapse aims for 100% test coverage across all packages.
 
   private async generateComprehensiveContent(): Promise<void> {
     // Generate comprehensive documentation content
-    // This would populate the database with all documentation
+    // Add examples to the examples Map
+    this.addExamples();
+  }
+
+  private addExamples(): void {
+    // Core examples
+    this.examples.set('basic-server', {
+      id: 'basic-server',
+      title: 'Basic HTTP Server',
+      description: 'Create a simple HTTP server with Synapse',
+      code: `import { Server } from '@synapse/core';
+
+const server = new Server({ port: 3000 });
+
+server.get('/', (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.end('<h1>Hello from Synapse!</h1>');
+});
+
+await server.start();
+console.log('Server running on http://localhost:3000');`,
+      language: 'typescript',
+      category: 'Core',
+      package: '@synapse/core',
+      isRunnable: true,
+      isInteractive: true,
+      dependencies: ['@synapse/core'],
+      difficulty: 'beginner',
+      estimatedTime: 5,
+      tags: ['server', 'http', 'basic'],
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+
+    this.examples.set('routing-example', {
+      id: 'routing-example',
+      title: 'Advanced Routing',
+      description: 'Create routes with parameters and middleware',
+      code: `import { Router } from '@synapse/routing';
+
+const router = new Router();
+
+router.get('/users/:id', (req, res) => {
+  const userId = req.params.id;
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ id: userId, name: 'John Doe' }));
+});
+
+router.post('/users', (req, res) => {
+  // Handle user creation
+  res.writeHead(201, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ message: 'User created' }));
+});`,
+      language: 'typescript',
+      category: 'Core',
+      package: '@synapse/routing',
+      isRunnable: true,
+      isInteractive: true,
+      dependencies: ['@synapse/routing'],
+      difficulty: 'intermediate',
+      estimatedTime: 10,
+      tags: ['routing', 'parameters', 'middleware'],
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+
+    this.examples.set('database-example', {
+      id: 'database-example',
+      title: 'Database with ORM',
+      description: 'Use the in-memory database with ORM capabilities',
+      code: `import { Database, Model } from '@synapse/database';
+
+class User extends Model {
+  static tableName = 'users';
+  
+  name: string;
+  email: string;
+  
+  constructor(data: any) {
+    super();
+    this.name = data.name;
+    this.email = data.email;
+  }
+}
+
+const db = new Database();
+db.registerModel(User);
+
+// Create a user
+const user = new User({ name: 'John Doe', email: 'john@example.com' });
+await user.save();
+
+// Find users
+const users = await User.find({ name: 'John Doe' });
+console.log(users);`,
+      language: 'typescript',
+      category: 'Core',
+      package: '@synapse/database',
+      isRunnable: true,
+      isInteractive: true,
+      dependencies: ['@synapse/database'],
+      difficulty: 'intermediate',
+      estimatedTime: 15,
+      tags: ['database', 'orm', 'models'],
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+
+    this.examples.set('auth-example', {
+      id: 'auth-example',
+      title: 'Authentication System',
+      description: 'Implement user authentication with JWT',
+      code: `import { AuthManager } from '@synapse/auth';
+
+const auth = new AuthManager({
+  jwtSecret: 'your-secret-key',
+  sessionTimeout: 3600000 // 1 hour
+});
+
+// Register a user
+const user = await auth.register({
+  email: 'user@example.com',
+  password: 'securepassword'
+});
+
+// Login
+const token = await auth.login('user@example.com', 'securepassword');
+
+// Verify token
+const decoded = await auth.verifyToken(token);
+console.log('User:', decoded);`,
+      language: 'typescript',
+      category: 'Core',
+      package: '@synapse/auth',
+      isRunnable: true,
+      isInteractive: true,
+      dependencies: ['@synapse/auth'],
+      difficulty: 'intermediate',
+      estimatedTime: 20,
+      tags: ['auth', 'jwt', 'security'],
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+
+    this.examples.set('templating-example', {
+      id: 'templating-example',
+      title: 'Template Engine',
+      description: 'Use the .webml templating engine',
+      code: `import { TemplateEngine } from '@synapse/templating';
+
+const engine = new TemplateEngine();
+
+const template = \`
+<h1>Welcome \{\{user.name\}\}!</h1>
+\{% if user.isAdmin \%\}
+  <p>You have admin privileges.</p>
+\{% endif \%\}
+
+<ul>
+\{% for item in items \%\}
+  <li>\{\{item.name\}\} - $\{\{item.price\}\}</li>
+\{% endfor \%\}
+</ul>
+\`;
+
+const html = await engine.render(template, {
+  user: { name: 'John', isAdmin: true },
+  items: [
+    { name: 'Product 1', price: 29.99 },
+    { name: 'Product 2', price: 39.99 }
+  ]
+});
+
+console.log(html);`,
+      language: 'typescript',
+      category: 'Core',
+      package: '@synapse/templating',
+      isRunnable: true,
+      isInteractive: true,
+      dependencies: ['@synapse/templating'],
+      difficulty: 'intermediate',
+      estimatedTime: 15,
+      tags: ['templating', 'webml', 'html'],
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+
+    this.examples.set('testing-example', {
+      id: 'testing-example',
+      title: 'Testing Framework',
+      description: 'Write tests with mocks and spies',
+      code: `import { TestRunner, Mock, Spy } from '@synapse/testing';
+
+const runner = new TestRunner();
+
+runner.test('should create user', async () => {
+  const mockDb = Mock.create('Database');
+  mockDb.save.mockResolvedValue({ id: 1, name: 'John' });
+  
+  const user = new User({ name: 'John' });
+  const result = await user.save();
+  
+  expect(result.id).toBe(1);
+  expect(mockDb.save).toHaveBeenCalled();
+});
+
+runner.test('should handle errors', async () => {
+  const spy = Spy.create(console, 'error');
+  
+  try {
+    await riskyOperation();
+  } catch (error) {
+    expect(spy).toHaveBeenCalledWith('Operation failed');
+  }
+});
+
+await runner.run();`,
+      language: 'typescript',
+      category: 'Core',
+      package: '@synapse/testing',
+      isRunnable: true,
+      isInteractive: true,
+      dependencies: ['@synapse/testing'],
+      difficulty: 'intermediate',
+      estimatedTime: 20,
+      tags: ['testing', 'mocks', 'spies'],
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
   }
 
   // ============================================================================
@@ -1905,8 +2133,9 @@ Synapse aims for 100% test coverage across all packages.
     // Interactive examples
     this.server.get('/examples', async (req, res) => {
       const examples = await this.getInteractiveExamples();
+      const examplesContent = examples.map(ex => this.generateExampleCard(ex)).join('');
       const html = await this.templateEngine.render(this.getExamplesTemplate(), {
-        examples,
+        examplesContent,
         title: 'Interactive Examples - Synapse Framework'
       });
       res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -2000,6 +2229,49 @@ Synapse aims for 100% test coverage across all packages.
           ${features}
         </div>
         <a href="./packages/${packageName}" class="btn btn-outline">View Docs</a>
+      </div>
+    `;
+  }
+
+  private generateExampleCard(example: DocumentationExample): string {
+    const tags = example.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+    const metaItems = [
+      `<span class="language">${example.language}</span>`,
+      `<span class="difficulty">${example.difficulty}</span>`,
+      `<span class="time">${example.estimatedTime} min</span>`
+    ];
+    
+    if (example.isRunnable) {
+      metaItems.push('<span class="runnable">Runnable</span>');
+    }
+    if (example.isInteractive) {
+      metaItems.push('<span class="interactive">Interactive</span>');
+    }
+    
+    const meta = metaItems.join('');
+    const actions = example.isRunnable 
+      ? `<button class="btn btn-primary run-example" data-example="${example.id}">Run Example</button>`
+      : '';
+    
+    return `
+      <div class="example-card">
+        <h3>${example.title}</h3>
+        <p>${example.description}</p>
+        
+        <div class="example-meta">
+          ${meta}
+        </div>
+
+        <div class="tags">
+          ${tags}
+        </div>
+
+        <pre><code class="language-${example.language}">${example.code}</code></pre>
+        
+        <div class="example-actions">
+          ${actions}
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
       </div>
     `;
   }
@@ -2368,38 +2640,12 @@ Synapse aims for 100% test coverage across all packages.
     <main class="main">
         <div class="container">
             <div class="examples-grid">
-                {% for example in examples %}
-                <div class="example-card">
-                    <h3>{{example.title}}</h3>
-                    <p>{{example.description}}</p>
-                    
-                    <div class="example-meta">
-                        <span class="language">{{example.language}}</span>
-                        <span class="difficulty">{{example.difficulty}}</span>
-                        <span class="time">{{example.estimatedTime}} min</span>
-                        {% if example.isRunnable %}<span class="runnable">Runnable</span>{% endif %}
-                        {% if example.isInteractive %}<span class="interactive">Interactive</span>{% endif %}
-                    </div>
-
-                    <div class="tags">
-                        {% for tag in example.tags %}
-                        <span class="tag">{{tag}}</span>
-                        {% endfor %}
-                    </div>
-
-                    <pre><code class="language-{{example.language}}">{{example.code}}</code></pre>
-                    
-                    <div class="example-actions">
-                        {% if example.isRunnable %}
-                        <button class="btn btn-primary run-example" data-example="{{example.id}}">Run Example</button>
-                        {% endif %}
-                        <button class="btn btn-secondary copy-code">Copy Code</button>
-                    </div>
-                </div>
-                {% endfor %}
+                {{examplesContent}}
             </div>
         </div>
     </main>
+    
+    <script src="./interactive.js"></script>
 </body>
 </html>`;
   }

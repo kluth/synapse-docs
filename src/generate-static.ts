@@ -48,9 +48,13 @@ async function generateStaticDocumentation() {
   }
   
   // Generate examples page
-  const examples = docsService['database'].find('documentation_examples');
+  const examples = await docsService['getInteractiveExamples']();
+  console.log(`📝 Found ${examples.length} examples for rendering`);
+  console.log('📝 Example IDs:', examples.map(ex => ex.id));
+  const examplesContent = examples.map(ex => docsService['generateExampleCard'](ex)).join('');
+  console.log('📝 Generated examples content length:', examplesContent.length);
   const examplesHtml = await docsService['templateEngine'].render(docsService['getExamplesTemplate'](), {
-    examples,
+    examplesContent,
     title: 'Code Examples',
     description: 'Practical examples for using Synapse framework'
   });
