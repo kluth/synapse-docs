@@ -38,9 +38,13 @@ async function generateStaticDocumentation() {
         console.log(`✅ Generated ${page.slug}.html`);
     }
     // Generate examples page
-    const examples = docsService['database'].find('documentation_examples');
+    const examples = await docsService['getInteractiveExamples']();
+    console.log(`📝 Found ${examples.length} examples for rendering`);
+    console.log('📝 Example IDs:', examples.map(ex => ex.id));
+    const examplesContent = examples.map(ex => docsService['generateExampleCard'](ex)).join('');
+    console.log('📝 Generated examples content length:', examplesContent.length);
     const examplesHtml = await docsService['templateEngine'].render(docsService['getExamplesTemplate'](), {
-        examples,
+        examplesContent,
         title: 'Code Examples',
         description: 'Practical examples for using Synapse framework'
     });
@@ -64,6 +68,35 @@ async function generateStaticDocumentation() {
     });
     await writeFile(join(outputDir, 'getting-started.html'), wizardHtml);
     console.log('✅ Generated getting-started.html');
+    // Generate patterns page
+    const patterns = await docsService['getDesignPatterns']();
+    const patternsContent = patterns.map(pattern => docsService['generatePatternCard'](pattern)).join('');
+    const patternsHtml = await docsService['templateEngine'].render(docsService['getPatternsTemplate'](), {
+        patternsContent,
+        title: 'Design Patterns - Synapse Framework',
+        description: 'Design patterns used throughout the Synapse framework'
+    });
+    await writeFile(join(outputDir, 'patterns.html'), patternsHtml);
+    console.log('✅ Generated patterns.html');
+    // Generate individual package pages
+    const packagesDir = join(outputDir, 'packages');
+    await mkdir(packagesDir, { recursive: true });
+    for (const pkg of allPackages) {
+        const packageName = pkg.name.replace('@synapse/', '');
+        const featuresContent = docsService['generatePackageFeatures'](pkg.features);
+        const classesContent = docsService['generatePackageClasses'](pkg.classes);
+        const examplesContent = docsService['generatePackageExamples'](pkg.examples);
+        const packageHtml = await docsService['templateEngine'].render(docsService['getPackageTemplate'](), {
+            package: pkg,
+            featuresContent,
+            classesContent,
+            examplesContent,
+            title: `${pkg.name} - Synapse Framework`,
+            description: pkg.description
+        });
+        await writeFile(join(packagesDir, `${packageName}.html`), packageHtml);
+        console.log(`✅ Generated packages/${packageName}.html`);
+    }
     console.log('🎉 Static documentation generated successfully!');
     console.log(`📁 Output directory: ${outputDir}`);
 }

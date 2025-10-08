@@ -119,13 +119,81 @@
                     <h2>Examples</h2>
                     
       <div class="example-code">
-        <pre><code class="language-typescript">[object Object]</code></pre>
-        <button class="btn btn-secondary copy-code">Copy Code</button>
+        <h4>Basic UI Component Usage</h4>
+        <p>Create and use UI components in your application</p>
+        <div class="example-meta">
+          <span class="language">typescript</span>
+          <span class="difficulty">beginner</span>
+          <span class="time">5 min</span>
+          <span class="runnable">Runnable</span>
+          <span class="interactive">Interactive</span>
+        </div>
+        <pre><code class="language-typescript">import { createComponent, mount, setTheme } from '@synapse/ui';
+
+// Create a button component
+const button = createComponent('Button', {
+  variant: 'primary',
+  size: 'md',
+  children: 'Click me!',
+  onClick: () => alert('Hello World!')
+});
+
+// Mount to DOM
+mount(button, '#app');
+
+// Set theme
+setTheme('dark');</code></pre>
+        <div class="example-actions">
+          <button class="btn btn-primary run-example" data-example="ui-basic-usage">Run Example</button>
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
       </div>
     
       <div class="example-code">
-        <pre><code class="language-typescript">[object Object]</code></pre>
-        <button class="btn btn-secondary copy-code">Copy Code</button>
+        <h4>Form with Validation</h4>
+        <p>Create a form with input validation using UI components</p>
+        <div class="example-meta">
+          <span class="language">typescript</span>
+          <span class="difficulty">intermediate</span>
+          <span class="time">10 min</span>
+          <span class="runnable">Runnable</span>
+          <span class="interactive">Interactive</span>
+        </div>
+        <pre><code class="language-typescript">import { createComponent, mount } from '@synapse/ui';
+
+// Create form components
+const form = createComponent('Container', {
+  children: [
+    createComponent('Heading', {
+      level: 2,
+      children: 'Contact Form'
+    }),
+    createComponent('Input', {
+      label: 'Name',
+      placeholder: 'Enter your name',
+      required: true,
+      error: false,
+      helpText: 'This field is required'
+    }),
+    createComponent('Input', {
+      inputType: 'email',
+      label: 'Email',
+      placeholder: 'Enter your email',
+      required: true
+    }),
+    createComponent('Button', {
+      variant: 'primary',
+      children: 'Submit',
+      buttonType: 'submit'
+    })
+  ]
+});
+
+mount(form, '#form-container');</code></pre>
+        <div class="example-actions">
+          <button class="btn btn-primary run-example" data-example="ui-form-example">Run Example</button>
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
       </div>
     
                 </div>

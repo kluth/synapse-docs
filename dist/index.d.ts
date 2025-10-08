@@ -32,7 +32,7 @@ interface DocumentationClass {
     methods: DocumentationMethod[];
     properties: DocumentationProperty[];
     examples: string[];
-    designPattern: string;
+    designPatterns: string[];
     testCoverage: number;
 }
 interface DocumentationMethod {
@@ -205,12 +205,18 @@ declare class DocumentationService {
     getSEOContent(): Promise<string>;
     private setupDatabase;
     private generateComprehensiveContent;
+    private addExamples;
     private setupRoutes;
     private generatePackageCard;
+    private generateExampleCard;
+    private generatePatternCard;
+    private getPackageTemplate;
+    private generatePackageFeatures;
+    private generatePackageClasses;
+    private generatePackageExamples;
     private generateAPIContent;
     private getHomeTemplate;
     private getWizardTemplate;
-    private getPackageTemplate;
     private getAPITemplate;
     private getExamplesTemplate;
     private getPatternsTemplate;

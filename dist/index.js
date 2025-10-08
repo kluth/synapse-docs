@@ -106,7 +106,7 @@ class DocumentationService {
                         { name: 'isRunning', type: 'boolean', description: 'Whether the server is currently running', isReadonly: true, isOptional: false }
                     ],
                     examples: ['const server = new Server({ port: 3000 });'],
-                    designPattern: 'Singleton',
+                    designPatterns: ['Singleton'],
                     testCoverage: 100
                 },
                 {
@@ -132,7 +132,7 @@ class DocumentationService {
                         { name: 'connections', type: 'Map<string, WebSocket>', description: 'Active WebSocket connections', isReadonly: true, isOptional: false }
                     ],
                     examples: ['const wsManager = new WebSocketManager();'],
-                    designPattern: 'Observer',
+                    designPatterns: ['Observer'],
                     testCoverage: 100
                 }
             ],
@@ -207,7 +207,7 @@ await server.start();`,
                         { name: 'routes', type: 'Map<string, RouteHandler>', description: 'Registered routes', isReadonly: true, isOptional: false }
                     ],
                     examples: ['const router = new Router();'],
-                    designPattern: 'Chain of Responsibility',
+                    designPatterns: ['Chain of Responsibility'],
                     testCoverage: 100
                 }
             ],
@@ -282,7 +282,7 @@ router.post('/users', (req, res) => {
                         { name: 'isConnected', type: 'boolean', description: 'Connection status', isReadonly: true, isOptional: false }
                     ],
                     examples: ['const db = new Database();'],
-                    designPattern: 'Singleton',
+                    designPatterns: ['Singleton'],
                     testCoverage: 100
                 },
                 {
@@ -305,7 +305,7 @@ router.post('/users', (req, res) => {
                         { name: 'id', type: 'string', description: 'Unique identifier', isReadonly: true, isOptional: false }
                     ],
                     examples: ['class User extends Model { /* ... */ }'],
-                    designPattern: 'Active Record',
+                    designPatterns: ['Active Record'],
                     testCoverage: 100
                 }
             ],
@@ -377,7 +377,7 @@ const users = await User.find({ email: 'john@example.com' });`,
                     ],
                     properties: [],
                     examples: [],
-                    designPattern: 'Singleton',
+                    designPatterns: ['Singleton'],
                     testCoverage: 100
                 }
             ],
@@ -406,7 +406,7 @@ const users = await User.find({ email: 'john@example.com' });`,
                     ],
                     properties: [],
                     examples: [],
-                    designPattern: 'Template Method',
+                    designPatterns: ['Template Method'],
                     testCoverage: 100
                 }
             ],
@@ -435,7 +435,7 @@ const users = await User.find({ email: 'john@example.com' });`,
                     ],
                     properties: [],
                     examples: [],
-                    designPattern: 'Command',
+                    designPatterns: ['Command'],
                     testCoverage: 100
                 }
             ],
@@ -464,7 +464,7 @@ const users = await User.find({ email: 'john@example.com' });`,
                     ],
                     properties: [],
                     examples: [],
-                    designPattern: 'Server',
+                    designPatterns: ['Server'],
                     testCoverage: 100
                 }
             ],
@@ -578,7 +578,7 @@ const users = await User.find({ email: 'john@example.com' });`,
                     ],
                     properties: [],
                     examples: [],
-                    designPattern: 'Facade',
+                    designPatterns: ['Facade'],
                     testCoverage: 100
                 }
             ],
@@ -772,7 +772,7 @@ const users = await User.find({ email: 'john@example.com' });`,
                         'const button = ui.createComponent("Button", { variant: "primary" });',
                         'ui.mount(button, document.body);'
                     ],
-                    designPattern: 'Singleton',
+                    designPatterns: ['Singleton'],
                     testCoverage: 100
                 },
                 {
@@ -813,7 +813,7 @@ const users = await User.find({ email: 'john@example.com' });`,
                         'ComponentFactory.register("Button", buttonFactory);',
                         'const button = ComponentFactory.create("Button", { variant: "primary" });'
                     ],
-                    designPattern: 'Factory',
+                    designPatterns: ['Factory'],
                     testCoverage: 100
                 }
             ],
@@ -1599,7 +1599,229 @@ Synapse aims for 100% test coverage across all packages.
     }
     async generateComprehensiveContent() {
         // Generate comprehensive documentation content
-        // This would populate the database with all documentation
+        // Add examples to the examples Map
+        this.addExamples();
+    }
+    addExamples() {
+        // Core examples
+        this.examples.set('basic-server', {
+            id: 'basic-server',
+            title: 'Basic HTTP Server',
+            description: 'Create a simple HTTP server with Synapse',
+            code: `import { Server } from '@synapse/core';
+
+const server = new Server({ port: 3000 });
+
+server.get('/', (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.end('<h1>Hello from Synapse!</h1>');
+});
+
+await server.start();
+console.log('Server running on http://localhost:3000');`,
+            language: 'typescript',
+            category: 'Core',
+            package: '@synapse/core',
+            isRunnable: true,
+            isInteractive: true,
+            dependencies: ['@synapse/core'],
+            difficulty: 'beginner',
+            estimatedTime: 5,
+            tags: ['server', 'http', 'basic'],
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
+        this.examples.set('routing-example', {
+            id: 'routing-example',
+            title: 'Advanced Routing',
+            description: 'Create routes with parameters and middleware',
+            code: `import { Router } from '@synapse/routing';
+
+const router = new Router();
+
+router.get('/users/:id', (req, res) => {
+  const userId = req.params.id;
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ id: userId, name: 'John Doe' }));
+});
+
+router.post('/users', (req, res) => {
+  // Handle user creation
+  res.writeHead(201, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ message: 'User created' }));
+});`,
+            language: 'typescript',
+            category: 'Core',
+            package: '@synapse/routing',
+            isRunnable: true,
+            isInteractive: true,
+            dependencies: ['@synapse/routing'],
+            difficulty: 'intermediate',
+            estimatedTime: 10,
+            tags: ['routing', 'parameters', 'middleware'],
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
+        this.examples.set('database-example', {
+            id: 'database-example',
+            title: 'Database with ORM',
+            description: 'Use the in-memory database with ORM capabilities',
+            code: `import { Database, Model } from '@synapse/database';
+
+class User extends Model {
+  static tableName = 'users';
+  
+  name: string;
+  email: string;
+  
+  constructor(data: any) {
+    super();
+    this.name = data.name;
+    this.email = data.email;
+  }
+}
+
+const db = new Database();
+db.registerModel(User);
+
+// Create a user
+const user = new User({ name: 'John Doe', email: 'john@example.com' });
+await user.save();
+
+// Find users
+const users = await User.find({ name: 'John Doe' });
+console.log(users);`,
+            language: 'typescript',
+            category: 'Core',
+            package: '@synapse/database',
+            isRunnable: true,
+            isInteractive: true,
+            dependencies: ['@synapse/database'],
+            difficulty: 'intermediate',
+            estimatedTime: 15,
+            tags: ['database', 'orm', 'models'],
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
+        this.examples.set('auth-example', {
+            id: 'auth-example',
+            title: 'Authentication System',
+            description: 'Implement user authentication with JWT',
+            code: `import { AuthManager } from '@synapse/auth';
+
+const auth = new AuthManager({
+  jwtSecret: 'your-secret-key',
+  sessionTimeout: 3600000 // 1 hour
+});
+
+// Register a user
+const user = await auth.register({
+  email: 'user@example.com',
+  password: 'securepassword'
+});
+
+// Login
+const token = await auth.login('user@example.com', 'securepassword');
+
+// Verify token
+const decoded = await auth.verifyToken(token);
+console.log('User:', decoded);`,
+            language: 'typescript',
+            category: 'Core',
+            package: '@synapse/auth',
+            isRunnable: true,
+            isInteractive: true,
+            dependencies: ['@synapse/auth'],
+            difficulty: 'intermediate',
+            estimatedTime: 20,
+            tags: ['auth', 'jwt', 'security'],
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
+        this.examples.set('templating-example', {
+            id: 'templating-example',
+            title: 'Template Engine',
+            description: 'Use the .webml templating engine',
+            code: `import { TemplateEngine } from '@synapse/templating';
+
+const engine = new TemplateEngine();
+
+const template = \`
+<h1>Welcome \{\{user.name\}\}!</h1>
+\{% if user.isAdmin \%\}
+  <p>You have admin privileges.</p>
+\{% endif \%\}
+
+<ul>
+\{% for item in items \%\}
+  <li>\{\{item.name\}\} - $\{\{item.price\}\}</li>
+\{% endfor \%\}
+</ul>
+\`;
+
+const html = await engine.render(template, {
+  user: { name: 'John', isAdmin: true },
+  items: [
+    { name: 'Product 1', price: 29.99 },
+    { name: 'Product 2', price: 39.99 }
+  ]
+});
+
+console.log(html);`,
+            language: 'typescript',
+            category: 'Core',
+            package: '@synapse/templating',
+            isRunnable: true,
+            isInteractive: true,
+            dependencies: ['@synapse/templating'],
+            difficulty: 'intermediate',
+            estimatedTime: 15,
+            tags: ['templating', 'webml', 'html'],
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
+        this.examples.set('testing-example', {
+            id: 'testing-example',
+            title: 'Testing Framework',
+            description: 'Write tests with mocks and spies',
+            code: `import { TestRunner, Mock, Spy } from '@synapse/testing';
+
+const runner = new TestRunner();
+
+runner.test('should create user', async () => {
+  const mockDb = Mock.create('Database');
+  mockDb.save.mockResolvedValue({ id: 1, name: 'John' });
+  
+  const user = new User({ name: 'John' });
+  const result = await user.save();
+  
+  expect(result.id).toBe(1);
+  expect(mockDb.save).toHaveBeenCalled();
+});
+
+runner.test('should handle errors', async () => {
+  const spy = Spy.create(console, 'error');
+  
+  try {
+    await riskyOperation();
+  } catch (error) {
+    expect(spy).toHaveBeenCalledWith('Operation failed');
+  }
+});
+
+await runner.run();`,
+            language: 'typescript',
+            category: 'Core',
+            package: '@synapse/testing',
+            isRunnable: true,
+            isInteractive: true,
+            dependencies: ['@synapse/testing'],
+            difficulty: 'intermediate',
+            estimatedTime: 20,
+            tags: ['testing', 'mocks', 'spies'],
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
     }
     // ============================================================================
     // ROUTE SETUP
@@ -1665,8 +1887,9 @@ Synapse aims for 100% test coverage across all packages.
         // Interactive examples
         this.server.get('/examples', async (req, res) => {
             const examples = await this.getInteractiveExamples();
+            const examplesContent = examples.map(ex => this.generateExampleCard(ex)).join('');
             const html = await this.templateEngine.render(this.getExamplesTemplate(), {
-                examples,
+                examplesContent,
                 title: 'Interactive Examples - Synapse Framework'
             });
             res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -1675,8 +1898,9 @@ Synapse aims for 100% test coverage across all packages.
         // Design patterns
         this.server.get('/patterns', async (req, res) => {
             const patterns = await this.getDesignPatterns();
+            const patternsContent = patterns.map(pattern => this.generatePatternCard(pattern)).join('');
             const html = await this.templateEngine.render(this.getPatternsTemplate(), {
-                patterns,
+                patternsContent,
                 title: 'Design Patterns - Synapse Framework'
             });
             res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -1753,6 +1977,172 @@ Synapse aims for 100% test coverage across all packages.
         <a href="./packages/${packageName}" class="btn btn-outline">View Docs</a>
       </div>
     `;
+    }
+    generateExampleCard(example) {
+        const tags = example.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+        const metaItems = [
+            `<span class="language">${example.language}</span>`,
+            `<span class="difficulty">${example.difficulty}</span>`,
+            `<span class="time">${example.estimatedTime} min</span>`
+        ];
+        if (example.isRunnable) {
+            metaItems.push('<span class="runnable">Runnable</span>');
+        }
+        if (example.isInteractive) {
+            metaItems.push('<span class="interactive">Interactive</span>');
+        }
+        const meta = metaItems.join('');
+        const actions = example.isRunnable
+            ? `<button class="btn btn-primary run-example" data-example="${example.id}">Run Example</button>`
+            : '';
+        return `
+      <div class="example-card">
+        <h3>${example.title}</h3>
+        <p>${example.description}</p>
+        
+        <div class="example-meta">
+          ${meta}
+        </div>
+
+        <div class="tags">
+          ${tags}
+        </div>
+
+        <pre><code class="language-${example.language}">${example.code}</code></pre>
+        
+        <div class="example-actions">
+          ${actions}
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
+      </div>
+    `;
+    }
+    generatePatternCard(pattern) {
+        return `
+      <div class="pattern-card">
+        <h3>${pattern}</h3>
+        <p>Used in multiple Synapse packages for consistent architecture</p>
+      </div>
+    `;
+    }
+    getPackageTemplate() {
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>{{package.name}}</h1>
+            <p>{{package.description}}</p>
+            <div class="package-meta">
+                <span class="version">v{{package.version}}</span>
+                <span class="coverage">{{package.testCoverage}}% coverage</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="package-details">
+                <div class="package-info">
+                    <h2>Package Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>Category:</strong> {{package.category}}
+                        </div>
+                        <div class="info-item">
+                            <strong>Dependencies:</strong> {{package.dependencies.join(', ')}}
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> {{package.performance.bundleSize}}
+                        </div>
+                        <div class="info-item">
+                            <strong>Load Time:</strong> {{package.performance.loadTime}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features-section">
+                    <h2>Features</h2>
+                    <div class="features-grid">
+                        {{featuresContent}}
+                    </div>
+                </div>
+
+                <div class="classes-section">
+                    <h2>Classes</h2>
+                    {{classesContent}}
+                </div>
+
+                <div class="examples-section">
+                    <h2>Examples</h2>
+                    {{examplesContent}}
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="../interactive.js"></script>
+</body>
+</html>`;
+    }
+    generatePackageFeatures(features) {
+        return features.map(feature => `<span class="feature-tag">${feature}</span>`).join('');
+    }
+    generatePackageClasses(classes) {
+        return classes.map(cls => `
+      <div class="class-card">
+        <h3>${cls.name}</h3>
+        <p>${cls.description}</p>
+        <div class="class-meta">
+          <span class="design-patterns">${cls.designPatterns.join(', ')}</span>
+          <span class="coverage">${cls.testCoverage}% coverage</span>
+        </div>
+        <div class="methods">
+          <h4>Methods</h4>
+          ${cls.methods.map(method => `
+            <div class="method">
+              <code>${method.name}(${method.parameters.map(p => `${p.name}: ${p.type}`).join(', ')})</code>
+              <p>${method.description}</p>
+            </div>
+          `).join('')}
+        </div>
+        <div class="properties">
+          <h4>Properties</h4>
+          ${cls.properties.map(prop => `
+            <div class="property">
+              <code>${prop.name}: ${prop.type}</code>
+              <p>${prop.description}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+    }
+    generatePackageExamples(examples) {
+        return examples.map(example => `
+      <div class="example-code">
+        <h4>${example.title}</h4>
+        <p>${example.description}</p>
+        <div class="example-meta">
+          <span class="language">${example.language}</span>
+          <span class="difficulty">${example.difficulty}</span>
+          <span class="time">${example.estimatedTime} min</span>
+          ${example.isRunnable ? '<span class="runnable">Runnable</span>' : ''}
+          ${example.isInteractive ? '<span class="interactive">Interactive</span>' : ''}
+        </div>
+        <pre><code class="language-${example.language}">${example.code}</code></pre>
+        <div class="example-actions">
+          ${example.isRunnable ? `<button class="btn btn-primary run-example" data-example="${example.id}">Run Example</button>` : ''}
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
+      </div>
+    `).join('');
     }
     generateAPIContent(packages) {
         return packages.map(pkg => {
@@ -1987,83 +2377,6 @@ Synapse aims for 100% test coverage across all packages.
 </body>
 </html>`;
     }
-    getPackageTemplate() {
-        return `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
-    <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-    <header class="header">
-        <div class="container">
-            <h1>{{package.name}}</h1>
-            <p>{{package.description}}</p>
-            <div class="package-meta">
-                <span class="version">v{{package.version}}</span>
-                <span class="coverage">{{package.testCoverage}}% test coverage</span>
-                <span class="bundle-size">{{package.performance.bundleSize}} bundle size</span>
-            </div>
-        </div>
-    </header>
-
-    <main class="main">
-        <div class="container">
-            <div class="package-content">
-                <section class="classes">
-                    <h2>Classes</h2>
-                    {% for class in package.classes %}
-                    <div class="class-card">
-                        <h3>{{class.name}}</h3>
-                        <p>{{class.description}}</p>
-                        <div class="class-meta">
-                            <span class="design-pattern">{{class.designPattern}}</span>
-                            <span class="coverage">{{class.testCoverage}}% coverage</span>
-                        </div>
-                        
-                        <div class="methods">
-                            <h4>Methods</h4>
-                            {% for method in class.methods %}
-                            <div class="method">
-                                <code>{{method.name}}({{method.parameters.map(p => p.name + ': ' + p.type).join(', ')}}){{method.isAsync ? ': Promise<' + method.returnType + '>' : ': ' + method.returnType}}</code>
-                                <p>{{method.description}}</p>
-                                <div class="method-meta">
-                                    <span class="complexity">{{method.complexity}}</span>
-                                    {% if method.isAsync %}<span class="async">async</span>{% endif %}
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endfor %}
-                </section>
-
-                <section class="examples">
-                    <h2>Examples</h2>
-                    {% for example in package.examples %}
-                    <div class="example-card">
-                        <h3>{{example.title}}</h3>
-                        <p>{{example.description}}</p>
-                        <div class="example-meta">
-                            <span class="difficulty">{{example.difficulty}}</span>
-                            <span class="time">{{example.estimatedTime}} min</span>
-                            {% if example.isRunnable %}<span class="runnable">Runnable</span>{% endif %}
-                        </div>
-                        <pre><code class="language-{{example.language}}">{{example.code}}</code></pre>
-                        {% if example.isRunnable %}
-                        <button class="btn btn-primary run-example">Run Example</button>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </section>
-            </div>
-        </div>
-    </main>
-</body>
-</html>`;
-    }
     getAPITemplate() {
         return `<!DOCTYPE html>
 <html lang="en">
@@ -2111,38 +2424,12 @@ Synapse aims for 100% test coverage across all packages.
     <main class="main">
         <div class="container">
             <div class="examples-grid">
-                {% for example in examples %}
-                <div class="example-card">
-                    <h3>{{example.title}}</h3>
-                    <p>{{example.description}}</p>
-                    
-                    <div class="example-meta">
-                        <span class="language">{{example.language}}</span>
-                        <span class="difficulty">{{example.difficulty}}</span>
-                        <span class="time">{{example.estimatedTime}} min</span>
-                        {% if example.isRunnable %}<span class="runnable">Runnable</span>{% endif %}
-                        {% if example.isInteractive %}<span class="interactive">Interactive</span>{% endif %}
-                    </div>
-
-                    <div class="tags">
-                        {% for tag in example.tags %}
-                        <span class="tag">{{tag}}</span>
-                        {% endfor %}
-                    </div>
-
-                    <pre><code class="language-{{example.language}}">{{example.code}}</code></pre>
-                    
-                    <div class="example-actions">
-                        {% if example.isRunnable %}
-                        <button class="btn btn-primary run-example" data-example="{{example.id}}">Run Example</button>
-                        {% endif %}
-                        <button class="btn btn-secondary copy-code">Copy Code</button>
-                    </div>
-                </div>
-                {% endfor %}
+                {{examplesContent}}
             </div>
         </div>
     </main>
+    
+    <script src="./interactive.js"></script>
 </body>
 </html>`;
     }
@@ -2166,15 +2453,12 @@ Synapse aims for 100% test coverage across all packages.
     <main class="main">
         <div class="container">
             <div class="patterns-grid">
-                {% for pattern in patterns %}
-                <div class="pattern-card">
-                    <h3>{{pattern}}</h3>
-                    <p>Used in multiple Synapse packages for consistent architecture</p>
-                </div>
-                {% endfor %}
+                {{patternsContent}}
             </div>
         </div>
     </main>
+    
+    <script src="./interactive.js"></script>
 </body>
 </html>`;
     }

@@ -82,8 +82,32 @@
                     <h2>Examples</h2>
                     
       <div class="example-code">
-        <pre><code class="language-typescript">[object Object]</code></pre>
-        <button class="btn btn-secondary copy-code">Copy Code</button>
+        <h4>Advanced Routing with Parameters</h4>
+        <p>Create routes with parameters and middleware</p>
+        <div class="example-meta">
+          <span class="language">typescript</span>
+          <span class="difficulty">intermediate</span>
+          <span class="time">10 min</span>
+          <span class="runnable">Runnable</span>
+          <span class="interactive">Interactive</span>
+        </div>
+        <pre><code class="language-typescript">import { Router } from '@synapse/routing';
+
+const router = new Router();
+
+router.get('/users/:id', (req, res) => {
+  const userId = req.params.id;
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ id: userId, name: 'John Doe' }));
+});
+
+router.post('/users', (req, res) => {
+  // Handle user creation
+});</code></pre>
+        <div class="example-actions">
+          <button class="btn btn-primary run-example" data-example="advanced-routing">Run Example</button>
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
       </div>
     
                 </div>

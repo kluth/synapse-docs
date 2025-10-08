@@ -119,8 +119,29 @@
                     <h2>Examples</h2>
                     
       <div class="example-code">
-        <pre><code class="language-typescript">[object Object]</code></pre>
-        <button class="btn btn-secondary copy-code">Copy Code</button>
+        <h4>Basic Server Setup</h4>
+        <p>Create a simple HTTP server with Synapse</p>
+        <div class="example-meta">
+          <span class="language">typescript</span>
+          <span class="difficulty">beginner</span>
+          <span class="time">5 min</span>
+          <span class="runnable">Runnable</span>
+          <span class="interactive">Interactive</span>
+        </div>
+        <pre><code class="language-typescript">import { Server } from '@synapse/core';
+
+const server = new Server({ port: 3000 });
+
+server.get('/', (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.end('<h1>Hello from Synapse!</h1>');
+});
+
+await server.start();</code></pre>
+        <div class="example-actions">
+          <button class="btn btn-primary run-example" data-example="basic-server">Run Example</button>
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
       </div>
     
                 </div>

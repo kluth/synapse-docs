@@ -109,8 +109,39 @@
                     <h2>Examples</h2>
                     
       <div class="example-code">
-        <pre><code class="language-typescript">[object Object]</code></pre>
-        <button class="btn btn-secondary copy-code">Copy Code</button>
+        <h4>ORM with Model Classes</h4>
+        <p>Use the Synapse database with ORM capabilities</p>
+        <div class="example-meta">
+          <span class="language">typescript</span>
+          <span class="difficulty">intermediate</span>
+          <span class="time">15 min</span>
+          <span class="runnable">Runnable</span>
+          <span class="interactive">Interactive</span>
+        </div>
+        <pre><code class="language-typescript">import { Database, Model } from '@synapse/database';
+
+class User extends Model {
+  static tableName = 'users';
+  
+  name: string = '';
+  email: string = '';
+  createdAt: Date = new Date();
+}
+
+const db = new Database();
+await db.connect();
+User.setDatabase(db);
+
+const user = new User();
+user.name = 'John Doe';
+user.email = 'john@example.com';
+await user.save();
+
+const users = await User.find({ email: 'john@example.com' });</code></pre>
+        <div class="example-actions">
+          <button class="btn btn-primary run-example" data-example="orm-example">Run Example</button>
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
       </div>
     
                 </div>

@@ -2388,11 +2388,23 @@ await runner.run();`,
     `).join('');
   }
 
-  private generatePackageExamples(examples: string[]): string {
+  private generatePackageExamples(examples: DocumentationExample[]): string {
     return examples.map(example => `
       <div class="example-code">
-        <pre><code class="language-typescript">${example}</code></pre>
-        <button class="btn btn-secondary copy-code">Copy Code</button>
+        <h4>${example.title}</h4>
+        <p>${example.description}</p>
+        <div class="example-meta">
+          <span class="language">${example.language}</span>
+          <span class="difficulty">${example.difficulty}</span>
+          <span class="time">${example.estimatedTime} min</span>
+          ${example.isRunnable ? '<span class="runnable">Runnable</span>' : ''}
+          ${example.isInteractive ? '<span class="interactive">Interactive</span>' : ''}
+        </div>
+        <pre><code class="language-${example.language}">${example.code}</code></pre>
+        <div class="example-actions">
+          ${example.isRunnable ? `<button class="btn btn-primary run-example" data-example="${example.id}">Run Example</button>` : ''}
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
       </div>
     `).join('');
   }
