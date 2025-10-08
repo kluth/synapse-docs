@@ -82,6 +82,17 @@ async function generateStaticDocumentation() {
   await writeFile(join(outputDir, 'getting-started.html'), wizardHtml);
   console.log('✅ Generated getting-started.html');
   
+  // Generate patterns page
+  const patterns = await docsService['getDesignPatterns']();
+  const patternsContent = patterns.map(pattern => docsService['generatePatternCard'](pattern)).join('');
+  const patternsHtml = await docsService['templateEngine'].render(docsService['getPatternsTemplate'](), {
+    patternsContent,
+    title: 'Design Patterns - Synapse Framework',
+    description: 'Design patterns used throughout the Synapse framework'
+  });
+  await writeFile(join(outputDir, 'patterns.html'), patternsHtml);
+  console.log('✅ Generated patterns.html');
+  
   console.log('🎉 Static documentation generated successfully!');
   console.log(`📁 Output directory: ${outputDir}`);
 }

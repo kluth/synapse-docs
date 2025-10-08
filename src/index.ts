@@ -44,7 +44,7 @@ interface DocumentationClass {
   methods: DocumentationMethod[];
   properties: DocumentationProperty[];
   examples: string[];
-  designPattern: string;
+  designPatterns: string[];
   testCoverage: number;
 }
 
@@ -296,7 +296,7 @@ class DocumentationService {
             { name: 'isRunning', type: 'boolean', description: 'Whether the server is currently running', isReadonly: true, isOptional: false }
           ],
           examples: ['const server = new Server({ port: 3000 });'],
-          designPattern: 'Singleton',
+          designPatterns: ['Singleton'],
           testCoverage: 100
         },
         {
@@ -322,7 +322,7 @@ class DocumentationService {
             { name: 'connections', type: 'Map<string, WebSocket>', description: 'Active WebSocket connections', isReadonly: true, isOptional: false }
           ],
           examples: ['const wsManager = new WebSocketManager();'],
-          designPattern: 'Observer',
+          designPatterns: ['Observer'],
           testCoverage: 100
         }
       ],
@@ -399,7 +399,7 @@ await server.start();`,
             { name: 'routes', type: 'Map<string, RouteHandler>', description: 'Registered routes', isReadonly: true, isOptional: false }
           ],
           examples: ['const router = new Router();'],
-          designPattern: 'Chain of Responsibility',
+          designPatterns: ['Chain of Responsibility'],
           testCoverage: 100
         }
       ],
@@ -476,7 +476,7 @@ router.post('/users', (req, res) => {
             { name: 'isConnected', type: 'boolean', description: 'Connection status', isReadonly: true, isOptional: false }
           ],
           examples: ['const db = new Database();'],
-          designPattern: 'Singleton',
+          designPatterns: ['Singleton'],
           testCoverage: 100
         },
         {
@@ -499,7 +499,7 @@ router.post('/users', (req, res) => {
             { name: 'id', type: 'string', description: 'Unique identifier', isReadonly: true, isOptional: false }
           ],
           examples: ['class User extends Model { /* ... */ }'],
-          designPattern: 'Active Record',
+          designPatterns: ['Active Record'],
           testCoverage: 100
         }
       ],
@@ -573,7 +573,7 @@ const users = await User.find({ email: 'john@example.com' });`,
           ],
           properties: [],
           examples: [],
-          designPattern: 'Singleton',
+          designPatterns: ['Singleton'],
           testCoverage: 100
         }
       ],
@@ -603,7 +603,7 @@ const users = await User.find({ email: 'john@example.com' });`,
           ],
           properties: [],
           examples: [],
-          designPattern: 'Template Method',
+          designPatterns: ['Template Method'],
           testCoverage: 100
         }
       ],
@@ -633,7 +633,7 @@ const users = await User.find({ email: 'john@example.com' });`,
           ],
           properties: [],
           examples: [],
-          designPattern: 'Command',
+          designPatterns: ['Command'],
           testCoverage: 100
         }
       ],
@@ -663,7 +663,7 @@ const users = await User.find({ email: 'john@example.com' });`,
           ],
           properties: [],
           examples: [],
-          designPattern: 'Server',
+          designPatterns: ['Server'],
           testCoverage: 100
         }
       ],
@@ -783,7 +783,7 @@ const users = await User.find({ email: 'john@example.com' });`,
           ],
           properties: [],
           examples: [],
-          designPattern: 'Facade',
+          designPatterns: ['Facade'],
           testCoverage: 100
         }
       ],
@@ -985,7 +985,7 @@ const users = await User.find({ email: 'john@example.com' });`,
             'const button = ui.createComponent("Button", { variant: "primary" });',
             'ui.mount(button, document.body);'
           ],
-          designPattern: 'Singleton',
+          designPatterns: ['Singleton'],
           testCoverage: 100
         },
         {
@@ -1026,7 +1026,7 @@ const users = await User.find({ email: 'john@example.com' });`,
             'ComponentFactory.register("Button", buttonFactory);',
             'const button = ComponentFactory.create("Button", { variant: "primary" });'
           ],
-          designPattern: 'Factory',
+          designPatterns: ['Factory'],
           testCoverage: 100
         }
       ],
@@ -2145,8 +2145,9 @@ await runner.run();`,
     // Design patterns
     this.server.get('/patterns', async (req, res) => {
       const patterns = await this.getDesignPatterns();
+      const patternsContent = patterns.map(pattern => this.generatePatternCard(pattern)).join('');
       const html = await this.templateEngine.render(this.getPatternsTemplate(), {
-        patterns,
+        patternsContent,
         title: 'Design Patterns - Synapse Framework'
       });
       res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -2272,6 +2273,15 @@ await runner.run();`,
           ${actions}
           <button class="btn btn-secondary copy-code">Copy Code</button>
         </div>
+      </div>
+    `;
+  }
+
+  private generatePatternCard(pattern: string): string {
+    return `
+      <div class="pattern-card">
+        <h3>${pattern}</h3>
+        <p>Used in multiple Synapse packages for consistent architecture</p>
       </div>
     `;
   }
@@ -2670,15 +2680,12 @@ await runner.run();`,
     <main class="main">
         <div class="container">
             <div class="patterns-grid">
-                {% for pattern in patterns %}
-                <div class="pattern-card">
-                    <h3>{{pattern}}</h3>
-                    <p>Used in multiple Synapse packages for consistent architecture</p>
-                </div>
-                {% endfor %}
+                {{patternsContent}}
             </div>
         </div>
     </main>
+    
+    <script src="./interactive.js"></script>
 </body>
 </html>`;
   }
