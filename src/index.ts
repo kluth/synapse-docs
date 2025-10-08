@@ -1999,7 +1999,7 @@ Synapse aims for 100% test coverage across all packages.
         <div class="package-features">
           ${features}
         </div>
-        <a href="/packages/${packageName}" class="btn btn-outline">View Docs</a>
+        <a href="./packages/${packageName}" class="btn btn-outline">View Docs</a>
       </div>
     `;
   }
@@ -2076,10 +2076,10 @@ Synapse aims for 100% test coverage across all packages.
             <h1>🚀 Synapse Framework</h1>
             <p class="subtitle">The most powerful TypeScript framework with zero dependencies</p>
             <nav class="main-nav">
-                <a href="/getting-started" class="nav-link primary">Get Started</a>
-                <a href="/api" class="nav-link">API Reference</a>
-                <a href="/examples" class="nav-link">Examples</a>
-                <a href="/patterns" class="nav-link">Design Patterns</a>
+                <a href="./getting-started" class="nav-link primary">Get Started</a>
+                <a href="./api" class="nav-link">API Reference</a>
+                <a href="./examples" class="nav-link">Examples</a>
+                <a href="./patterns" class="nav-link">Design Patterns</a>
             </nav>
         </div>
     </header>
@@ -2090,8 +2090,8 @@ Synapse aims for 100% test coverage across all packages.
                 <h2>Complete Documentation for All 22 Packages</h2>
                 <p>Comprehensive guides, interactive examples, and step-by-step tutorials for every aspect of the Synapse framework.</p>
                 <div class="cta-buttons">
-                    <a href="/getting-started" class="btn btn-primary">Start Building</a>
-                    <a href="/examples" class="btn btn-secondary">View Examples</a>
+            <a href="./getting-started" class="btn btn-primary">Start Building</a>
+            <a href="./examples" class="btn btn-secondary">View Examples</a>
                 </div>
             </section>
 
@@ -2140,7 +2140,7 @@ Synapse aims for 100% test coverage across all packages.
                     </div>
                 </div>
                 <div class="ui-cta">
-                    <a href="/packages/ui" class="btn btn-primary">Explore UI Components</a>
+                    <a href="./packages/ui" class="btn btn-primary">Explore UI Components</a>
                     <a href="https://github.com/kluth/synapse-ui" class="btn btn-outline" target="_blank">View on GitHub</a>
                 </div>
             </section>

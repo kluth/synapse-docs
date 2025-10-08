@@ -421,9 +421,9 @@ app.start(() => {
           <h2>Congratulations!</h2>
           <p>You've completed the Synapse getting started wizard. You're now ready to build amazing applications!</p>
           <div class="completion-actions">
-            <a href="/api" class="btn btn-primary">Explore API</a>
-            <a href="/examples" class="btn btn-secondary">View Examples</a>
-            <a href="/" class="btn btn-outline">Back to Home</a>
+            <a href="./api" class="btn btn-primary">Explore API</a>
+            <a href="./examples" class="btn btn-secondary">View Examples</a>
+            <a href="./" class="btn btn-outline">Back to Home</a>
           </div>
         </div>
       \`;
