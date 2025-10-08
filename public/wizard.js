@@ -196,7 +196,7 @@ testRunner.run();`
 import { GraphQLServer } from '@synapse/graphql';
 
 const server = new GraphQLServer({
-  typeDefs: \`
+  typeDefs: `
     type User {
       id: ID!
       name: String!
@@ -206,7 +206,7 @@ const server = new GraphQLServer({
     type Query {
       users: [User]
     }
-  \`,
+  `,
   resolvers: {
     Query: {
       users: () => db.find('users')
@@ -338,22 +338,22 @@ app.start(() => {
     const stepContainer = document.querySelector('.step-container');
     
     if (stepContainer) {
-      stepContainer.innerHTML = \`
-        <h2>\${step.title}</h2>
-        <p>\${step.description}</p>
+      stepContainer.innerHTML = `
+        <h2>${step.title}</h2>
+        <p>${step.description}</p>
         <div class="step-content">
-          \${step.content}
+          ${step.content}
         </div>
         <div class="code-example">
           <h4>Code Example:</h4>
-          <pre><code>\${step.codeExample || 'No code example available'}</code></pre>
+          <pre><code>${step.codeExample || 'No code example available'}</code></pre>
           <button class="btn btn-secondary copy-code">Copy Code</button>
         </div>
         <div class="step-actions">
-          \${this.currentStep > 0 ? '<button class="btn btn-outline prev-step">Previous</button>' : ''}
-          \${this.currentStep < this.steps.length - 1 ? '<button class="btn btn-primary next-step">Next Step</button>' : '<button class="btn btn-success complete-wizard">Complete</button>'}
+          ${this.currentStep > 0 ? '<button class="btn btn-outline prev-step">Previous</button>' : ''}
+          ${this.currentStep < this.steps.length - 1 ? '<button class="btn btn-primary next-step">Next Step</button>' : '<button class="btn btn-success complete-wizard">Complete</button>'}
         </div>
-      \`;
+      `;
     }
     
     // Re-bind copy button events
@@ -415,7 +415,7 @@ app.start(() => {
   completeWizard() {
     const wizardContainer = document.querySelector('.wizard-container');
     if (wizardContainer) {
-      wizardContainer.innerHTML = \`
+      wizardContainer.innerHTML = `
         <div class="wizard-complete">
           <div class="success-icon">🎉</div>
           <h2>Congratulations!</h2>
@@ -426,7 +426,7 @@ app.start(() => {
             <a href="./" class="btn btn-outline">Back to Home</a>
           </div>
         </div>
-      \`;
+      `;
     }
   }
   
@@ -436,11 +436,11 @@ app.start(() => {
     
     if (progressFill) {
       const percentage = ((this.currentStep + 1) / this.steps.length) * 100;
-      progressFill.style.width = \`\${percentage}%\`;
+      progressFill.style.width = `${percentage}%`;
     }
     
     if (progressText) {
-      progressText.textContent = \`Step \${this.currentStep + 1} of \${this.steps.length}\`;
+      progressText.textContent = `Step ${this.currentStep + 1} of ${this.steps.length}`;
     }
   }
   
@@ -465,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Add completion styles
 const style = document.createElement('style');
-style.textContent = \`
+style.textContent = `
   .wizard-complete {
     text-align: center;
     padding: var(--space-12);
@@ -511,5 +511,5 @@ style.textContent = \`
   .step-container {
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
-\`;
+`;
 document.head.appendChild(style);
