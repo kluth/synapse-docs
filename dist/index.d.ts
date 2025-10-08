@@ -206,6 +206,7 @@ declare class DocumentationService {
     private setupDatabase;
     private generateComprehensiveContent;
     private setupRoutes;
+    private generatePackageCard;
     private getHomeTemplate;
     private getWizardTemplate;
     private getPackageTemplate;

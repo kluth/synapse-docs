@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <title>API Reference</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -17,23 +17,23 @@
     <main class="main">
         <div class="container">
             <div class="api-content">
-                {% for package in packages %}
+                
                 <section class="package-section">
-                    <h2>{{package.name}}</h2>
-                    <p>{{package.description}}</p>
+                    <h2></h2>
+                    <p></p>
                     
                     <div class="package-info">
                         <div class="info-item">
-                            <strong>Version:</strong> {{package.version}}
+                            <strong>Version:</strong> 
                         </div>
                         <div class="info-item">
-                            <strong>Category:</strong> {{package.category}}
+                            <strong>Category:</strong> 
                         </div>
                         <div class="info-item">
-                            <strong>Test Coverage:</strong> {{package.testCoverage}}%
+                            <strong>Test Coverage:</strong> %
                         </div>
                         <div class="info-item">
-                            <strong>Bundle Size:</strong> {{package.performance.bundleSize}}
+                            <strong>Bundle Size:</strong> 
                         </div>
                     </div>
 
@@ -41,17 +41,731 @@
                         <h3>Classes</h3>
                         {% for class in package.classes %}
                         <div class="class">
-                            <h4>{{class.name}}</h4>
-                            <p>{{class.description}}</p>
+                            <h4></h4>
+                            <p></p>
                             
                             <div class="methods">
                                 <h5>Methods</h5>
                                 {% for method in class.methods %}
                                 <div class="method">
-                                    <code>{{method.name}}({{method.parameters.map(p => p.name + ': ' + p.type).join(', ')}}){{method.isAsync ? ': Promise<' + method.returnType + '>' : ': ' + method.returnType}}</code>
-                                    <p>{{method.description}}</p>
+                                    <code>()</code>
+                                    <p></p>
                                 </div>
-                                {% endfor %}
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
+                <section class="package-section">
+                    <h2></h2>
+                    <p></p>
+                    
+                    <div class="package-info">
+                        <div class="info-item">
+                            <strong>Version:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Category:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Test Coverage:</strong> %
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 
+                        </div>
+                    </div>
+
+                    <div class="classes">
+                        <h3>Classes</h3>
+                        {% for class in package.classes %}
+                        <div class="class">
+                            <h4></h4>
+                            <p></p>
+                            
+                            <div class="methods">
+                                <h5>Methods</h5>
+                                {% for method in class.methods %}
+                                <div class="method">
+                                    <code>()</code>
+                                    <p></p>
+                                </div>
+                                
                             </div>
                         </div>
                         {% endfor %}
