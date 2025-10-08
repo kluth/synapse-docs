@@ -38,8 +38,9 @@ jobs:
 
       - name: Copy static files to root
         run: |
-          cp public/* .
+          cp -r public/* .
           ls -la
+          ls -la packages/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
