@@ -2423,7 +2423,7 @@ await runner.run();`,
         nextgenPackages,
         futuristicPackages,
         title: 'Synapse Framework - Complete Documentation',
-        description: 'Comprehensive documentation for all 22 Synapse packages with interactive examples and getting started wizard'
+        description: 'Comprehensive documentation for all 23 Synapse packages with interactive examples and getting started wizard'
       });
       res.writeHead(200, { 'Content-Type': 'text/html' });
       res.end(html);
@@ -2904,7 +2904,7 @@ await runner.run();`,
                     </div>
                     <div class="feature">
                         <h4>🧩 Modular Architecture</h4>
-                        <p>22 independent packages for different capabilities, use only what you need</p>
+                        <p>23 independent packages for different capabilities, use only what you need</p>
                     </div>
                     <div class="feature">
                         <h4>🚀 Cutting-Edge Features</h4>

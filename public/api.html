@@ -737,6 +737,123 @@
         </section>
       
         <section class="package-section">
+          <h2>@snps/stakeholder</h2>
+          <p>Comprehensive stakeholder reporting package for generating beautiful documents and reports covering tests, coverage, performance, lighthouse reports, and more</p>
+          
+          <div class="package-info">
+            <div class="info-item">
+              <strong>Version:</strong> 1.0.0
+            </div>
+            <div class="info-item">
+              <strong>Category:</strong> enterprise
+            </div>
+            <div class="info-item">
+              <strong>Test Coverage:</strong> 100%
+            </div>
+            <div class="info-item">
+              <strong>Bundle Size:</strong> 2.1MB
+            </div>
+          </div>
+
+          <div class="classes">
+            <h3>Classes</h3>
+            
+          <div class="class">
+            <h4>StakeholderReporter</h4>
+            <p>Main class for generating comprehensive stakeholder reports</p>
+            <div class="methods">
+              <h5>Methods</h5>
+              
+            <div class="method">
+              <code>generateExecutiveSummary(period: { start: Date; end: Date }): Promise<Promise<StakeholderReport>></code>
+              <p>Generate executive summary report with high-level metrics and KPIs</p>
+            </div>
+          
+            <div class="method">
+              <code>generateTechnicalReport(period: { start: Date; end: Date }): Promise<Promise<StakeholderReport>></code>
+              <p>Generate detailed technical performance report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateFinancialReport(period: { start: Date; end: Date }): Promise<Promise<StakeholderReport>></code>
+              <p>Generate financial and resource utilization report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateComplianceReport(period: { start: Date; end: Date }): Promise<Promise<StakeholderReport>></code>
+              <p>Generate compliance and security audit report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateDashboardReport(period: { start: Date; end: Date }): Promise<Promise<StakeholderReport>></code>
+              <p>Generate comprehensive executive dashboard report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateRealtimeDashboard(): Promise<Promise<StakeholderReport>></code>
+              <p>Generate real-time metrics dashboard</p>
+            </div>
+          
+            <div class="method">
+              <code>exportReport(reportId: string, format: 'pdf' | 'excel' | 'html' | 'json'): Promise<Promise<Buffer>></code>
+              <p>Export report to various formats (PDF, Excel, HTML, JSON)</p>
+            </div>
+          
+            </div>
+          </div>
+        
+          <div class="class">
+            <h4>MetricsCollector</h4>
+            <p>Collects metrics from various sources for report generation</p>
+            <div class="methods">
+              <h5>Methods</h5>
+              
+            <div class="method">
+              <code>collectAllMetrics(period: { start: Date; end: Date }): Promise<Promise<ReportMetrics>></code>
+              <p>Collect comprehensive metrics for a given time period</p>
+            </div>
+          
+            <div class="method">
+              <code>collectRealtimeMetrics(): Promise<Promise<ReportMetrics>></code>
+              <p>Collect real-time system metrics</p>
+            </div>
+          
+            </div>
+          </div>
+        
+          <div class="class">
+            <h4>DocumentGenerator</h4>
+            <p>Generates documents in various formats (PDF, Excel, HTML, JSON)</p>
+            <div class="methods">
+              <h5>Methods</h5>
+              
+            <div class="method">
+              <code>generatePDF(report: StakeholderReport): Promise<Promise<Buffer>></code>
+              <p>Generate PDF document from report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateExcel(report: StakeholderReport): Promise<Promise<Buffer>></code>
+              <p>Generate Excel spreadsheet from report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateHTML(report: StakeholderReport): Promise<Promise<Buffer>></code>
+              <p>Generate HTML document from report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateJSON(report: StakeholderReport): Promise<Promise<Buffer>></code>
+              <p>Generate JSON document from report</p>
+            </div>
+          
+            </div>
+          </div>
+        
+          </div>
+        </section>
+      
+        <section class="package-section">
           <h2>@snps/cli</h2>
           <p>Command-line interface tools for development, building, and deployment</p>
           

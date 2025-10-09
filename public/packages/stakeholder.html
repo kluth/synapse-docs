@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@snps/stakeholder - Synapse Framework</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>@snps/stakeholder</h1>
+            <p>Comprehensive stakeholder reporting package for generating beautiful documents and reports covering tests, coverage, performance, lighthouse reports, and more</p>
+            <div class="package-meta">
+                <span class="version">v1.0.0</span>
+                <span class="coverage">100% coverage</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="package-details">
+                <div class="package-info">
+                    <h2>Package Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>Category:</strong> enterprise
+                        </div>
+                        <div class="info-item">
+                            <strong>Dependencies:</strong> 
+                        </div>
+                        <div class="info-item">
+                            <strong>Bundle Size:</strong> 2.1MB
+                        </div>
+                        <div class="info-item">
+                            <strong>Load Time:</strong> < 200ms
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features-section">
+                    <h2>Features</h2>
+                    <div class="features-grid">
+                        <span class="feature-tag">Executive Reports</span><span class="feature-tag">Technical Reports</span><span class="feature-tag">Financial Reports</span><span class="feature-tag">Compliance Reports</span><span class="feature-tag">Performance Reports</span><span class="feature-tag">Test Coverage Reports</span><span class="feature-tag">Lighthouse Reports</span><span class="feature-tag">Real-time Dashboards</span><span class="feature-tag">Multi-format Export</span><span class="feature-tag">Chart Generation</span><span class="feature-tag">Data Integration</span><span class="feature-tag">Automated Scheduling</span><span class="feature-tag">Custom Templates</span><span class="feature-tag">Metrics Collection</span><span class="feature-tag">Report Persistence</span>
+                    </div>
+                </div>
+
+                <div class="classes-section">
+                    <h2>Classes</h2>
+                    
+      <div class="class-card">
+        <h3>StakeholderReporter</h3>
+        <p>Main class for generating comprehensive stakeholder reports</p>
+        <div class="class-meta">
+          <span class="design-patterns">Factory, Builder, Template Method</span>
+          <span class="coverage">100% coverage</span>
+        </div>
+        <div class="methods">
+          <h4>Methods</h4>
+          
+            <div class="method">
+              <code>generateExecutiveSummary(period: { start: Date; end: Date })</code>
+              <p>Generate executive summary report with high-level metrics and KPIs</p>
+            </div>
+          
+            <div class="method">
+              <code>generateTechnicalReport(period: { start: Date; end: Date })</code>
+              <p>Generate detailed technical performance report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateFinancialReport(period: { start: Date; end: Date })</code>
+              <p>Generate financial and resource utilization report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateComplianceReport(period: { start: Date; end: Date })</code>
+              <p>Generate compliance and security audit report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateDashboardReport(period: { start: Date; end: Date })</code>
+              <p>Generate comprehensive executive dashboard report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateRealtimeDashboard()</code>
+              <p>Generate real-time metrics dashboard</p>
+            </div>
+          
+            <div class="method">
+              <code>exportReport(reportId: string, format: 'pdf' | 'excel' | 'html' | 'json')</code>
+              <p>Export report to various formats (PDF, Excel, HTML, JSON)</p>
+            </div>
+          
+        </div>
+        <div class="properties">
+          <h4>Properties</h4>
+          
+            <div class="property">
+              <code>reports: Map<string, StakeholderReport></code>
+              <p>Collection of generated reports</p>
+            </div>
+          
+            <div class="property">
+              <code>metricsCollector: MetricsCollector</code>
+              <p>Metrics collection system</p>
+            </div>
+          
+            <div class="property">
+              <code>templateEngine: ReportTemplateEngine</code>
+              <p>Report template engine</p>
+            </div>
+          
+        </div>
+      </div>
+    
+      <div class="class-card">
+        <h3>MetricsCollector</h3>
+        <p>Collects metrics from various sources for report generation</p>
+        <div class="class-meta">
+          <span class="design-patterns">Strategy, Observer</span>
+          <span class="coverage">100% coverage</span>
+        </div>
+        <div class="methods">
+          <h4>Methods</h4>
+          
+            <div class="method">
+              <code>collectAllMetrics(period: { start: Date; end: Date })</code>
+              <p>Collect comprehensive metrics for a given time period</p>
+            </div>
+          
+            <div class="method">
+              <code>collectRealtimeMetrics()</code>
+              <p>Collect real-time system metrics</p>
+            </div>
+          
+        </div>
+        <div class="properties">
+          <h4>Properties</h4>
+          
+        </div>
+      </div>
+    
+      <div class="class-card">
+        <h3>DocumentGenerator</h3>
+        <p>Generates documents in various formats (PDF, Excel, HTML, JSON)</p>
+        <div class="class-meta">
+          <span class="design-patterns">Strategy, Factory</span>
+          <span class="coverage">100% coverage</span>
+        </div>
+        <div class="methods">
+          <h4>Methods</h4>
+          
+            <div class="method">
+              <code>generatePDF(report: StakeholderReport)</code>
+              <p>Generate PDF document from report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateExcel(report: StakeholderReport)</code>
+              <p>Generate Excel spreadsheet from report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateHTML(report: StakeholderReport)</code>
+              <p>Generate HTML document from report</p>
+            </div>
+          
+            <div class="method">
+              <code>generateJSON(report: StakeholderReport)</code>
+              <p>Generate JSON document from report</p>
+            </div>
+          
+        </div>
+        <div class="properties">
+          <h4>Properties</h4>
+          
+        </div>
+      </div>
+    
+                </div>
+
+                <div class="examples-section">
+                    <h2>Examples</h2>
+                    
+      <div class="example-code">
+        <h4>Generate Executive Summary Report</h4>
+        <p>Create a comprehensive executive summary report with KPIs and metrics</p>
+        <div class="example-meta">
+          <span class="language">typescript</span>
+          <span class="difficulty">intermediate</span>
+          <span class="time">10 min</span>
+          <span class="runnable">Runnable</span>
+          <span class="interactive">Interactive</span>
+        </div>
+        <pre><code class="language-typescript">import { StakeholderReporter } from '@snps/stakeholder';
+
+const reporter = new StakeholderReporter();
+
+// Generate executive summary for Q1 2024
+const report = await reporter.generateExecutiveSummary({
+  start: new Date('2024-01-01'),
+  end: new Date('2024-03-31')
+});
+
+console.log('Report generated:', report.title);
+console.log('Summary:', report.summary);
+console.log('Sections:', report.sections.length);
+
+// Export to PDF
+const pdfBuffer = await reporter.exportReport(report.id, 'pdf');
+await writeFile('executive-summary-q1-2024.pdf', pdfBuffer);</code></pre>
+        <div class="example-actions">
+          <button class="btn btn-primary run-example" data-example="executive-summary">Run Example</button>
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
+      </div>
+    
+      <div class="example-code">
+        <h4>Generate Technical Performance Report</h4>
+        <p>Create detailed technical report with performance metrics and test coverage</p>
+        <div class="example-meta">
+          <span class="language">typescript</span>
+          <span class="difficulty">intermediate</span>
+          <span class="time">8 min</span>
+          <span class="runnable">Runnable</span>
+          <span class="interactive">Interactive</span>
+        </div>
+        <pre><code class="language-typescript">import { StakeholderReporter } from '@snps/stakeholder';
+
+const reporter = new StakeholderReporter();
+
+// Generate technical report
+const report = await reporter.generateTechnicalReport({
+  start: new Date('2024-01-01'),
+  end: new Date('2024-01-31')
+});
+
+console.log('Technical Report:', report.title);
+console.log('Test Coverage:', report.metrics.testCoverage + '%');
+console.log('Performance Score:', report.metrics.performanceScore + '%');
+console.log('Security Score:', report.metrics.securityScore + '%');
+
+// Export to Excel for detailed analysis
+const excelBuffer = await reporter.exportReport(report.id, 'excel');
+await writeFile('technical-report-jan-2024.xlsx', excelBuffer);</code></pre>
+        <div class="example-actions">
+          <button class="btn btn-primary run-example" data-example="technical-report">Run Example</button>
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
+      </div>
+    
+      <div class="example-code">
+        <h4>Real-time Metrics Dashboard</h4>
+        <p>Create a real-time dashboard showing live system metrics</p>
+        <div class="example-meta">
+          <span class="language">typescript</span>
+          <span class="difficulty">beginner</span>
+          <span class="time">5 min</span>
+          <span class="runnable">Runnable</span>
+          <span class="interactive">Interactive</span>
+        </div>
+        <pre><code class="language-typescript">import { StakeholderReporter } from '@snps/stakeholder';
+
+const reporter = new StakeholderReporter();
+
+// Generate real-time dashboard
+const dashboard = await reporter.generateRealtimeDashboard();
+
+console.log('Real-time Dashboard:', dashboard.title);
+console.log('Current Uptime:', dashboard.metrics.uptime + '%');
+console.log('Response Time:', dashboard.metrics.responseTime + 'ms');
+console.log('Error Rate:', dashboard.metrics.errorRate + '%');
+
+// Export as interactive HTML
+const htmlBuffer = await reporter.exportReport(dashboard.id, 'html');
+await writeFile('realtime-dashboard.html', htmlBuffer);</code></pre>
+        <div class="example-actions">
+          <button class="btn btn-primary run-example" data-example="realtime-dashboard">Run Example</button>
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
+      </div>
+    
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="../interactive.js"></script>
+</body>
+</html>
