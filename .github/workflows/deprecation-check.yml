@@ -1,0 +1,134 @@
+name: Deprecation Check
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  check-deprecations:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check for TypeScript deprecations
+        id: ts-deprecations
+        run: |
+          echo "Checking for TypeScript deprecations..."
+          pnpm tsc --noEmit 2>&1 | tee ts-output.txt || true
+
+          # Check if there are deprecation warnings
+          if grep -i "deprecated" ts-output.txt; then
+            echo "has_deprecations=true" >> $GITHUB_OUTPUT
+            echo "## TypeScript Deprecations Found" >> deprecations.md
+            echo "" >> deprecations.md
+            grep -i "deprecated" ts-output.txt >> deprecations.md || true
+          else
+            echo "has_deprecations=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check for Node.js deprecations
+        id: node-deprecations
+        run: |
+          echo "Checking for Node.js deprecations..."
+
+          # Run tests and capture deprecation warnings
+          NODE_OPTIONS="--trace-deprecation" pnpm test 2>&1 | tee node-output.txt || true
+
+          # Check if there are deprecation warnings
+          if grep -i "deprecat" node-output.txt; then
+            echo "has_node_deprecations=true" >> $GITHUB_OUTPUT
+            echo "" >> deprecations.md
+            echo "## Node.js Deprecations Found" >> deprecations.md
+            echo "" >> deprecations.md
+            grep -B2 -A2 -i "deprecat" node-output.txt >> deprecations.md || true
+          else
+            echo "has_node_deprecations=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check for outdated dependencies
+        id: outdated-deps
+        run: |
+          echo "Checking for outdated dependencies..."
+          pnpm outdated --format list 2>&1 | tee outdated.txt || true
+
+          if [ -s outdated.txt ]; then
+            echo "has_outdated=true" >> $GITHUB_OUTPUT
+            echo "" >> deprecations.md
+            echo "## Outdated Dependencies" >> deprecations.md
+            echo "" >> deprecations.md
+            echo '```' >> deprecations.md
+            cat outdated.txt >> deprecations.md
+            echo '```' >> deprecations.md
+          else
+            echo "has_outdated=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Issue
+        if: steps.ts-deprecations.outputs.has_deprecations == 'true' || steps.node-deprecations.outputs.has_node_deprecations == 'true' || steps.outdated-deps.outputs.has_outdated == 'true'
+        uses: actions/github-script@v7
+        env:
+          REPO_NAME: ${{ github.repository }}
+        with:
+          script: |
+            const fs = require('fs');
+            const deprecationsContent = fs.readFileSync('deprecations.md', 'utf8');
+
+            // Check if an issue already exists
+            const existingIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'deprecation,automated'
+            });
+
+            const issueTitle = `[Deprecation] Deprecation warnings found - ${new Date().toISOString().split('T')[0]}`;
+
+            // Check if we already have an open deprecation issue from today
+            const today = new Date().toISOString().split('T')[0];
+            const todayIssue = existingIssues.data.find(issue => issue.title.includes(today));
+
+            if (todayIssue) {
+              // Update existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: todayIssue.number,
+                body: `## Updated Deprecation Report\n\n${deprecationsContent}\n\n---\n*Updated at ${new Date().toISOString()}*`
+              });
+              console.log(`Updated existing issue #${todayIssue.number}`);
+            } else {
+              // Create new issue
+              const issue = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueTitle,
+                body: `# Deprecation Warnings Detected\n\nThe automated deprecation check has found issues that need attention.\n\n${deprecationsContent}\n\n---\n\n## Action Required\n\n- [ ] Review all deprecation warnings\n- [ ] Create specific issues for each deprecation that needs to be addressed\n- [ ] Update code to remove deprecated API usage\n- [ ] Update dependencies to latest stable versions\n- [ ] Run tests to ensure everything works after updates\n\n---\n*This issue was automatically created by the deprecation check workflow.*\n*Generated at ${new Date().toISOString()}*`,
+                labels: ['deprecation', 'automated', 'maintenance', 'high-priority']
+              });
+              console.log(`Created new issue #${issue.data.number}`);
+            }
+
+      - name: Clean up
+        if: always()
+        run: |
+          rm -f ts-output.txt node-output.txt outdated.txt deprecations.md
