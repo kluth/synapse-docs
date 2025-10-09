@@ -10,16 +10,16 @@ class SynapseWizard {
         description: "Let's get you started with the most powerful TypeScript framework with zero dependencies.",
         content: "Synapse is a comprehensive TypeScript framework designed for modern web development. It provides everything you need to build robust, scalable applications without external dependencies.",
         codeExample: `// Install Synapse
-npm install @synapse/core @synapse/routing @synapse/database
+npm install @snps/core @snps/routing @snps/database
 
 // Or use individual packages
-npm install @synapse/auth @synapse/templating @synapse/testing`
+npm install @snps/auth @snps/templating @snps/testing`
       },
       {
         title: "Core Setup",
         description: "Set up your first Synapse application with the core framework.",
         content: "Start by creating a basic server with Synapse Core. This gives you HTTP server capabilities, middleware support, and performance monitoring.",
-        codeExample: `import { Server } from '@synapse/core';
+        codeExample: `import { Server } from '@snps/core';
 
 const app = new Server({
   port: 3000,
@@ -38,7 +38,7 @@ app.start(() => {
         title: "Routing System",
         description: "Learn how to handle routes and middleware with Synapse Routing.",
         content: "Synapse provides a powerful routing system with path matching, parameters, and middleware support.",
-        codeExample: `import { Router } from '@synapse/routing';
+        codeExample: `import { Router } from '@snps/routing';
 
 const router = new Router();
 
@@ -56,7 +56,7 @@ router.post('/users', (req, res) => {
         title: "Database Integration",
         description: "Connect to your database with Synapse Database.",
         content: "Synapse includes a powerful database layer with ORM capabilities, query builder, and model relationships.",
-        codeExample: `import { Database, Model } from '@synapse/database';
+        codeExample: `import { Database, Model } from '@snps/database';
 
 const db = new Database();
 
@@ -78,7 +78,7 @@ await user.save();`
         title: "Authentication",
         description: "Secure your application with Synapse Auth.",
         content: "Implement robust authentication and authorization with OAuth2, JWT, and security features.",
-        codeExample: `import { AuthManager } from '@synapse/auth';
+        codeExample: `import { AuthManager } from '@snps/auth';
 
 const auth = new AuthManager({
   secret: 'your-secret-key',
@@ -95,7 +95,7 @@ const token = await auth.login('user@example.com', 'password');`
         title: "Templating Engine",
         description: "Create dynamic content with Synapse Templating.",
         content: "Build dynamic web pages with Synapse's powerful templating engine supporting variables, conditionals, and loops.",
-        codeExample: `import { TemplateEngine } from '@synapse/templating';
+        codeExample: `import { TemplateEngine } from '@snps/templating';
 
 const engine = new TemplateEngine();
 
@@ -112,7 +112,7 @@ const html = engine.render(template, { user: { name: 'John', isAdmin: true } });
         title: "Testing Framework",
         description: "Test your application with Synapse Testing.",
         content: "Ensure your code quality with Synapse's comprehensive testing framework including mocks, spies, and coverage tools.",
-        codeExample: `import { TestRunner, Mock } from '@synapse/testing';
+        codeExample: `import { TestRunner, Mock } from '@snps/testing';
 
 const runner = new TestRunner();
 
@@ -131,7 +131,7 @@ runner.run();`
         description: "Explore Synapse's advanced capabilities.",
         content: "Synapse includes many advanced features like GraphQL, microservices, AI/ML integration, and more.",
         codeExample: `// GraphQL Support
-import { GraphQLServer } from '@synapse/graphql';
+import { GraphQLServer } from '@snps/graphql';
 
 const server = new GraphQLServer({
   typeDefs: \`
@@ -153,7 +153,7 @@ const server = new GraphQLServer({
 });
 
 // AI Integration
-import { AIManager } from '@synapse/ai';
+import { AIManager } from '@snps/ai';
 
 const ai = new AIManager();
 const response = await ai.generateText('Explain TypeScript');
@@ -163,7 +163,7 @@ console.log(response);`
         title: "Performance Optimization",
         description: "Optimize your Synapse application for production.",
         content: "Synapse includes built-in performance monitoring, caching, and optimization features.",
-        codeExample: `import { PerformanceMonitor } from '@synapse/core';
+        codeExample: `import { PerformanceMonitor } from '@snps/core';
 
 const monitor = new PerformanceMonitor();
 
@@ -207,9 +207,9 @@ app.use((err, req, res, next) => {
         description: "You're ready to build amazing applications with Synapse!",
         content: "You've completed the Synapse getting started guide. You now have all the knowledge to build powerful, scalable applications.",
         codeExample: `// Your first Synapse app
-import { Server } from '@synapse/core';
-import { Router } from '@synapse/routing';
-import { Database } from '@synapse/database';
+import { Server } from '@snps/core';
+import { Router } from '@snps/routing';
+import { Database } from '@snps/database';
 
 const app = new Server();
 const router = new Router();

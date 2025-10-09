@@ -30,7 +30,7 @@
           <span class="tag">server</span><span class="tag">http</span><span class="tag">basic</span>
         </div>
 
-        <pre><code class="language-typescript">import { Server } from '@synapse/core';
+        <pre><code class="language-typescript">import { Server } from '@snps/core';
 
 const server = new Server({ port: 3000 });
 
@@ -60,7 +60,7 @@ console.log('Server running on http://localhost:3000');</code></pre>
           <span class="tag">routing</span><span class="tag">parameters</span><span class="tag">middleware</span>
         </div>
 
-        <pre><code class="language-typescript">import { Router } from '@synapse/routing';
+        <pre><code class="language-typescript">import { Router } from '@snps/routing';
 
 const router = new Router();
 
@@ -94,7 +94,7 @@ router.post('/users', (req, res) => {
           <span class="tag">database</span><span class="tag">orm</span><span class="tag">models</span>
         </div>
 
-        <pre><code class="language-typescript">import { Database, Model } from '@synapse/database';
+        <pre><code class="language-typescript">import { Database, Model } from '@snps/database';
 
 class User extends Model {
   static tableName = 'users';
@@ -138,7 +138,7 @@ console.log(users);</code></pre>
           <span class="tag">auth</span><span class="tag">jwt</span><span class="tag">security</span>
         </div>
 
-        <pre><code class="language-typescript">import { AuthManager } from '@synapse/auth';
+        <pre><code class="language-typescript">import { AuthManager } from '@snps/auth';
 
 const auth = new AuthManager({
   jwtSecret: 'your-secret-key',
@@ -176,7 +176,7 @@ console.log('User:', decoded);</code></pre>
           <span class="tag">templating</span><span class="tag">webml</span><span class="tag">html</span>
         </div>
 
-        <pre><code class="language-typescript">import { TemplateEngine } from '@synapse/templating';
+        <pre><code class="language-typescript">import { TemplateEngine } from '@snps/templating';
 
 const engine = new TemplateEngine();
 
@@ -217,7 +217,7 @@ console.log(html);</code></pre>
           <span class="tag">testing</span><span class="tag">mocks</span><span class="tag">spies</span>
         </div>
 
-        <pre><code class="language-typescript">import { TestRunner, Mock, Spy } from '@synapse/testing';
+        <pre><code class="language-typescript">import { TestRunner, Mock, Spy } from '@snps/testing';
 
 const runner = new TestRunner();
 

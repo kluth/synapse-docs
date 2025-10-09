@@ -82,7 +82,7 @@ async function generateStaticDocumentation() {
     const packagesDir = join(outputDir, 'packages');
     await mkdir(packagesDir, { recursive: true });
     for (const pkg of allPackages) {
-        const packageName = pkg.name.replace('@synapse/', '');
+        const packageName = pkg.name.replace('@snps/', '');
         const featuresContent = docsService['generatePackageFeatures'](pkg.features);
         const classesContent = docsService['generatePackageClasses'](pkg.classes);
         const examplesContent = docsService['generatePackageExamples'](pkg.examples);

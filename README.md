@@ -1,4 +1,4 @@
-# @synapse/docs
+# @snps/docs
 
 Comprehensive documentation for the Synapse framework, built entirely with Synapse itself to showcase its capabilities.
 

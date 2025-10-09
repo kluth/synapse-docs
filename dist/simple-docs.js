@@ -42,8 +42,8 @@ export class SimpleDocumentationService {
             id: 'basic-server',
             title: 'Basic Server Setup',
             description: 'Create a simple HTTP server with Synapse',
-            code: `import { Server } from '@synapse/core';
-import { Router } from '@synapse/routing';
+            code: `import { Server } from '@snps/core';
+import { Router } from '@snps/routing';
 
 const server = new Server({ port: 3000 });
 const router = new Router();
@@ -57,15 +57,15 @@ server.useRouter(router);
 await server.start();`,
             language: 'typescript',
             category: 'Core',
-            package: '@synapse/core',
+            package: '@snps/core',
             isRunnable: true,
-            dependencies: ['@synapse/core', '@synapse/routing']
+            dependencies: ['@snps/core', '@snps/routing']
         });
         this.addExample({
             id: 'ai-integration',
             title: 'AI Integration with Web AI',
             description: 'Use Google Web AI for browser-based AI generation',
-            code: `import { AIService } from '@synapse/ai';
+            code: `import { AIService } from '@snps/ai';
 
 const ai = new AIService({
   webAI: { enableBrowserAI: true }
@@ -84,9 +84,9 @@ const response = await ai.generateText(
 console.log(response.content);`,
             language: 'typescript',
             category: 'AI',
-            package: '@synapse/ai',
+            package: '@snps/ai',
             isRunnable: true,
-            dependencies: ['@synapse/ai']
+            dependencies: ['@snps/ai']
         });
     }
     addPage(page) {
@@ -260,14 +260,14 @@ Synapse is a comprehensive TypeScript framework that provides everything you nee
 ### 1. Install Synapse
 
 \`\`\`bash
-npm install @synapse/core @synapse/routing @synapse/database
+npm install @snps/core @snps/routing @snps/database
 \`\`\`
 
 ### 2. Create Your First App
 
 \`\`\`typescript
-import { Server } from '@synapse/core';
-import { Router } from '@synapse/routing';
+import { Server } from '@snps/core';
+import { Router } from '@snps/routing';
 
 const server = new Server({ port: 3000 });
 const router = new Router();
@@ -304,22 +304,22 @@ The Synapse core framework provides the foundation for all applications with HTT
 
 ## Packages
 
-### @synapse/core
+### @snps/core
 The heart of the Synapse framework with HTTP server, middleware, caching, performance monitoring, WebSocket support, logging, configuration management, error handling, and monitoring dashboard.
 
-### @synapse/routing
+### @snps/routing
 Advanced routing system with path matching, parameters, middleware support, and route grouping.
 
-### @synapse/database
+### @snps/database
 In-memory database with ORM capabilities, QueryBuilder, Model class, relationships, and validation.
 
-### @synapse/auth
+### @snps/auth
 Complete authentication system with JWT, sessions, password hashing, OAuth2, CSRF protection, and security management.
 
-### @synapse/templating
+### @snps/templating
 Template engine for .webml files with variable substitution, conditional blocks, loops, and HTML escaping.
 
-### @synapse/testing
+### @snps/testing
 Comprehensive testing framework with test runner, mocks, spies, stubs, and advanced testing utilities.
 
 ## Getting Started with Core
@@ -327,8 +327,8 @@ Comprehensive testing framework with test runner, mocks, spies, stubs, and advan
 ### Basic Server Setup
 
 \`\`\`typescript
-import { Server } from '@synapse/core';
-import { Router } from '@synapse/routing';
+import { Server } from '@snps/core';
+import { Router } from '@snps/routing';
 
 const server = new Server({
   port: 3000,
@@ -357,22 +357,22 @@ Synapse includes revolutionary futuristic capabilities with Progressive Web Apps
 
 ## Packages
 
-### @synapse/pwa
+### @snps/pwa
 Progressive Web App support with service workers, offline functionality, push notifications, and native app-like installation.
 
-### @synapse/voice
+### @snps/voice
 Voice user interfaces with speech recognition, speech synthesis, voice commands, and conversational AI.
 
-### @synapse/webassembly
+### @snps/webassembly
 WebAssembly support for high-performance computing with near-native execution speeds and multi-language support.
 
-### @synapse/webrtc
+### @snps/webrtc
 WebRTC for real-time communication with video/audio streaming, screen sharing, and peer-to-peer data transfer.
 
 ## PWA Example
 
 \`\`\`typescript
-import { PWAService, PWAManifestBuilder } from '@synapse/pwa';
+import { PWAService, PWAManifestBuilder } from '@snps/pwa';
 
 const pwa = new PWAService(
   new PWAManifestBuilder()
@@ -398,7 +398,7 @@ await pwa.registerServiceWorker();
 ## Voice Interface Example
 
 \`\`\`typescript
-import { VoiceService } from '@synapse/voice';
+import { VoiceService } from '@snps/voice';
 
 const voice = new VoiceService({
   language: 'en-US',

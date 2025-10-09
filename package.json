@@ -1,5 +1,5 @@
 {
-  "name": "@synapse/docs",
+  "name": "@snps/docs",
   "version": "1.0.0",
   "description": "Comprehensive Synapse framework documentation built with Synapse itself",
   "type": "module",
