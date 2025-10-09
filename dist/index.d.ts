@@ -1,7 +1,7 @@
 /**
  * Comprehensive Synapse Framework Documentation System
  *
- * This system provides complete documentation for all 21 Synapse packages
+ * This system provides complete documentation for all 23 Synapse packages
  * with interactive getting started wizard, TDD approach, clean code principles,
  * design patterns, and comprehensive API coverage.
  *
@@ -190,6 +190,7 @@ declare class DocumentationService {
     private initializeWebRTCPackage;
     private initializeUIPackage;
     private initializeCLIPackage;
+    private initializeStakeholderPackage;
     private initializeGettingStartedWizard;
     getDocumentedPackages(): Promise<string[]>;
     getGettingStartedWizard(): Promise<GettingStartedWizard>;
