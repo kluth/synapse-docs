@@ -1,0 +1,61 @@
+version: 2
+updates:
+  # Enable version updates for npm/pnpm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "02:00"
+    # Group updates to reduce PR noise
+    groups:
+      typescript:
+        patterns:
+          - "typescript"
+          - "@types/*"
+      testing:
+        patterns:
+          - "*test*"
+          - "*jest*"
+          - "*vitest*"
+      development:
+        patterns:
+          - "eslint*"
+          - "prettier*"
+          - "@typescript-eslint/*"
+    # Only check devDependencies (aligns with zero-dependency philosophy)
+    allow:
+      - dependency-type: "development"
+    # Automatically create PRs
+    open-pull-requests-limit: 10
+    # Add labels for easier identification
+    labels:
+      - "dependencies"
+      - "automated"
+      - "devDependencies"
+    # Enable rebasing to keep PRs up to date
+    rebase-strategy: "auto"
+    # Set commit message prefix
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    # Reviewers (optional - can be configured per repo)
+    # reviewers:
+    #   - "username"
+    # assignees:
+    #   - "username"
+
+  # Monitor GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "02:00"
+    labels:
+      - "dependencies"
+      - "automated"
+      - "github-actions"
+    commit-message:
+      prefix: "chore(ci)"
+      include: "scope"
