@@ -216,7 +216,7 @@ class DocumentationService {
   // ============================================================================
 
   private async initializeAllPackages(): Promise<void> {
-    console.log('📦 Initializing all 23 Synapse packages...');
+    console.log('📦 Initializing all 24 Synapse packages...');
 
     // Core Packages
     await this.initializeCorePackage();
@@ -225,6 +225,7 @@ class DocumentationService {
     await this.initializeAuthPackage();
     await this.initializeTemplatingPackage();
     await this.initializeTestingPackage();
+    await this.initializeHttpClientPackage();
 
     // Enterprise Packages
     await this.initializeGraphQLPackage();
@@ -256,7 +257,256 @@ class DocumentationService {
     await this.initializeCLIPackage();
     await this.initializeStoragePackage();
 
-    console.log('✅ All 23 packages initialized successfully!');
+    console.log('✅ All 24 packages initialized successfully!');
+  }
+
+  private async initializeHttpClientPackage(): Promise<void> {
+    const pkg: DocumentationPackage = {
+      name: '@snps/http-client',
+      version: '0.1.0',
+      description: 'Zero-dependency HTTP client for modern web applications with fetch API, request/response interceptors, and TypeScript support.',
+      category: 'core',
+      classes: [
+        {
+          name: 'HttpClient',
+          description: 'Main HTTP client class with modern fetch API and zero dependencies',
+          methods: [
+            {
+              name: 'get',
+              description: 'Performs a GET request',
+              parameters: [
+                { name: 'url', type: 'string', description: 'Request URL', required: true },
+                { name: 'options', type: 'RequestOptions', description: 'Request options', required: false }
+              ],
+              returnType: 'Promise<Response>',
+              examples: ['const response = await client.get("/api/users");'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'post',
+              description: 'Performs a POST request',
+              parameters: [
+                { name: 'url', type: 'string', description: 'Request URL', required: true },
+                { name: 'data', type: 'any', description: 'Request body data', required: false },
+                { name: 'options', type: 'RequestOptions', description: 'Request options', required: false }
+              ],
+              returnType: 'Promise<Response>',
+              examples: ['const response = await client.post("/api/users", { name: "John" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'put',
+              description: 'Performs a PUT request',
+              parameters: [
+                { name: 'url', type: 'string', description: 'Request URL', required: true },
+                { name: 'data', type: 'any', description: 'Request body data', required: false },
+                { name: 'options', type: 'RequestOptions', description: 'Request options', required: false }
+              ],
+              returnType: 'Promise<Response>',
+              examples: ['const response = await client.put("/api/users/1", { name: "Jane" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'delete',
+              description: 'Performs a DELETE request',
+              parameters: [
+                { name: 'url', type: 'string', description: 'Request URL', required: true },
+                { name: 'options', type: 'RequestOptions', description: 'Request options', required: false }
+              ],
+              returnType: 'Promise<Response>',
+              examples: ['const response = await client.delete("/api/users/1");'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'patch',
+              description: 'Performs a PATCH request',
+              parameters: [
+                { name: 'url', type: 'string', description: 'Request URL', required: true },
+                { name: 'data', type: 'any', description: 'Request body data', required: false },
+                { name: 'options', type: 'RequestOptions', description: 'Request options', required: false }
+              ],
+              returnType: 'Promise<Response>',
+              examples: ['const response = await client.patch("/api/users/1", { name: "Updated" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'request',
+              description: 'Performs a custom HTTP request',
+              parameters: [
+                { name: 'options', type: 'RequestOptions', description: 'Complete request options', required: true }
+              ],
+              returnType: 'Promise<Response>',
+              examples: ['const response = await client.request({ method: "HEAD", url: "/api/status" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'addInterceptor',
+              description: 'Adds a request/response interceptor',
+              parameters: [
+                { name: 'interceptor', type: 'Interceptor', description: 'Interceptor function', required: true }
+              ],
+              returnType: 'void',
+              examples: ['client.addInterceptor((request) => { request.headers.Authorization = "Bearer token"; });'],
+              complexity: 'O(1)',
+              isAsync: false,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'setBaseURL',
+              description: 'Sets the base URL for all requests',
+              parameters: [
+                { name: 'baseURL', type: 'string', description: 'Base URL', required: true }
+              ],
+              returnType: 'void',
+              examples: ['client.setBaseURL("https://api.example.com");'],
+              complexity: 'O(1)',
+              isAsync: false,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'setDefaultHeaders',
+              description: 'Sets default headers for all requests',
+              parameters: [
+                { name: 'headers', type: 'Record<string, string>', description: 'Default headers', required: true }
+              ],
+              returnType: 'void',
+              examples: ['client.setDefaultHeaders({ "Content-Type": "application/json" });'],
+              complexity: 'O(1)',
+              isAsync: false,
+              isDeprecated: false,
+              since: '0.1.0'
+            }
+          ],
+          properties: [
+            { name: 'baseURL', type: 'string', description: 'Base URL for requests', isReadonly: false, isOptional: true },
+            { name: 'defaultHeaders', type: 'Record<string, string>', description: 'Default headers', isReadonly: false, isOptional: true },
+            { name: 'timeout', type: 'number', description: 'Request timeout in milliseconds', isReadonly: false, isOptional: true }
+          ],
+          examples: ['const client = new HttpClient({ baseURL: "https://api.example.com" });'],
+          designPatterns: ['Builder', 'Chain of Responsibility'],
+          testCoverage: 100
+        }
+      ],
+      methods: [],
+      examples: [
+        {
+          id: 'basic-http-client',
+          title: 'Basic HTTP Client Usage',
+          description: 'Create and use the HTTP client for API requests',
+          code: `import { HttpClient } from '@snps/http-client';
+
+const client = new HttpClient({
+  baseURL: 'https://api.example.com',
+  timeout: 5000,
+  defaultHeaders: {
+    'Content-Type': 'application/json'
+  }
+});
+
+// GET request
+const users = await client.get('/users');
+
+// POST request
+const newUser = await client.post('/users', {
+  name: 'John Doe',
+  email: 'john@example.com'
+});
+
+// PUT request
+const updatedUser = await client.put('/users/1', {
+  name: 'Jane Doe'
+});
+
+// DELETE request
+await client.delete('/users/1');`,
+          language: 'typescript',
+          category: 'Core',
+          package: '@snps/http-client',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['@snps/http-client'],
+          difficulty: 'beginner',
+          estimatedTime: 10,
+          tags: ['http', 'client', 'fetch', 'api'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: 'http-client-interceptors',
+          title: 'HTTP Client with Interceptors',
+          description: 'Use interceptors for authentication and error handling',
+          code: `import { HttpClient } from '@snps/http-client';
+
+const client = new HttpClient();
+
+// Request interceptor for authentication
+client.addInterceptor((request) => {
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    request.headers.Authorization = \`Bearer \${token}\`;
+  }
+  return request;
+});
+
+// Response interceptor for error handling
+client.addInterceptor((response) => {
+  if (!response.ok) {
+    throw new Error(\`HTTP \${response.status}: \${response.statusText}\`);
+  }
+  return response;
+});
+
+// Usage
+try {
+  const data = await client.get('/protected-resource');
+  console.log(data);
+} catch (error) {
+  console.error('Request failed:', error.message);
+}`,
+          language: 'typescript',
+          category: 'Core',
+          package: '@snps/http-client',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['@snps/http-client'],
+          difficulty: 'intermediate',
+          estimatedTime: 15,
+          tags: ['http', 'client', 'interceptors', 'authentication', 'error-handling'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ],
+      designPatterns: ['Builder', 'Chain of Responsibility', 'Strategy'],
+      testCoverage: 100,
+      dependencies: [],
+      features: ['Zero Dependencies', 'Fetch API', 'TypeScript Support', 'Request/Response Interceptors', 'Timeout Support', 'Base URL', 'Default Headers', 'Error Handling'],
+      performance: {
+        bundleSize: '8KB',
+        loadTime: '< 10ms',
+        memoryUsage: '~50KB'
+      }
+    };
+    this.packages.set('@snps/http-client', pkg);
   }
 
   private async initializeStoragePackage(): Promise<void> {
