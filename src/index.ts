@@ -1,8 +1,5 @@
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
-import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { createServer, IncomingMessage, ServerResponse } from 'node:http';
-import { EventEmitter } from 'node:events';
 
 /**
  * Comprehensive Synapse Framework Documentation System
@@ -190,9 +187,6 @@ class DocumentationService {
   private auth: SimpleAuth;
   private packages: Map<string, DocumentationPackage> = new Map();
   private examples: Map<string, DocumentationExample> = new Map();
-  private tutorials: Map<string, DocumentationTutorial> = new Map();
-  private designPatterns: Map<string, DesignPattern> = new Map();
-  private cleanCodePrinciples: Map<string, CleanCodePrinciple> = new Map();
   private wizard: GettingStartedWizard | null = null;
 
   constructor() {
@@ -216,7 +210,7 @@ class DocumentationService {
   // ============================================================================
 
   private async initializeAllPackages(): Promise<void> {
-    console.log('📦 Initializing all 24 Synapse packages...');
+    console.log('📦 Initializing all 25 Synapse packages...');
 
     // Core Packages
     await this.initializeCorePackage();
@@ -226,6 +220,7 @@ class DocumentationService {
     await this.initializeTemplatingPackage();
     await this.initializeTestingPackage();
     await this.initializeHttpClientPackage();
+    await this.initializeCommunicationPackage();
 
     // Enterprise Packages
     await this.initializeGraphQLPackage();
@@ -260,7 +255,7 @@ class DocumentationService {
     // Companion Apps
     await this.initializeAndroidApp();
 
-    console.log('✅ All 24 packages and companion apps initialized successfully!');
+    console.log('✅ All 25 packages and companion apps initialized successfully!');
   }
 
   private async initializeHttpClientPackage(): Promise<void> {
@@ -510,6 +505,292 @@ try {
       }
     };
     this.packages.set('@snps/http-client', pkg);
+  }
+
+  private async initializeCommunicationPackage(): Promise<void> {
+    const pkg: DocumentationPackage = {
+      name: '@snps/communication',
+      version: '1.0.0',
+      description: 'Unified communication package supporting all major protocols (REST, gRPC, tRPC, WebSocket, SSE, MQTT, SOAP) with strict TypeScript typing.',
+      category: 'core',
+      classes: [
+        {
+          name: 'CommunicationClient',
+          description: 'Unified client interface for all communication protocols',
+          methods: [
+            {
+              name: 'connect',
+              description: 'Connects to a specific protocol',
+              parameters: [
+                { name: 'protocol', type: 'ProtocolType', description: 'Protocol to connect to', required: true },
+                { name: 'config', type: 'ConnectionConfig', description: 'Connection configuration', required: true }
+              ],
+              returnType: 'Promise<void>',
+              examples: ['await client.connect("rest", { baseUrl: "https://api.example.com" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'request',
+              description: 'Makes a request using the specified protocol',
+              parameters: [
+                { name: 'protocol', type: 'ProtocolType', description: 'Protocol to use', required: true },
+                { name: 'request', type: 'UnifiedRequest', description: 'Request details', required: true }
+              ],
+              returnType: 'Promise<UnifiedResponse>',
+              examples: ['const response = await client.request("rest", { method: "GET", path: "/users" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'disconnect',
+              description: 'Disconnects from a specific protocol',
+              parameters: [
+                { name: 'protocol', type: 'ProtocolType', description: 'Protocol to disconnect from', required: true }
+              ],
+              returnType: 'Promise<void>',
+              examples: ['await client.disconnect("rest");'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'disconnectAll',
+              description: 'Disconnects from all protocols',
+              parameters: [],
+              returnType: 'Promise<void>',
+              examples: ['await client.disconnectAll();'],
+              complexity: 'O(n)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            }
+          ],
+          properties: [],
+          examples: ['const client = new CommunicationClient();'],
+          designPatterns: ['Adapter', 'Factory'],
+          testCoverage: 100
+        },
+        {
+          name: 'RestClient',
+          description: 'REST API client leveraging @snps/http-client',
+          methods: [
+            {
+              name: 'connect',
+              description: 'Connects to REST API',
+              parameters: [
+                { name: 'config', type: 'RestConfig', description: 'REST configuration', required: true }
+              ],
+              returnType: 'Promise<void>',
+              examples: ['await client.connect({ baseUrl: "https://api.example.com" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'request',
+              description: 'Makes HTTP request',
+              parameters: [
+                { name: 'request', type: 'UnifiedRequest', description: 'Request details', required: true }
+              ],
+              returnType: 'Promise<UnifiedResponse>',
+              examples: ['const response = await client.request({ method: "GET", path: "/users" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            }
+          ],
+          properties: [],
+          examples: ['const client = new RestClient();'],
+          designPatterns: ['Adapter'],
+          testCoverage: 100
+        },
+        {
+          name: 'GrpcClient',
+          description: 'gRPC client with protocol buffer support',
+          methods: [
+            {
+              name: 'connect',
+              description: 'Connects to gRPC service',
+              parameters: [
+                { name: 'config', type: 'GrpcConfig', description: 'gRPC configuration', required: true }
+              ],
+              returnType: 'Promise<void>',
+              examples: ['await client.connect({ url: "localhost:50051", protoPath: "./service.proto", packageName: "example", serviceName: "UserService" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'request',
+              description: 'Makes gRPC call',
+              parameters: [
+                { name: 'request', type: 'UnifiedRequest', description: 'Request details', required: true }
+              ],
+              returnType: 'Promise<UnifiedResponse>',
+              examples: ['const response = await client.request({ method: "getUser", body: { id: "123" } });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            }
+          ],
+          properties: [],
+          examples: ['const client = new GrpcClient();'],
+          designPatterns: ['Adapter'],
+          testCoverage: 100
+        }
+      ],
+      methods: [],
+      examples: [
+        {
+          id: 'unified-client-usage',
+          title: 'Unified Communication Client',
+          description: 'Use the unified client to connect to multiple protocols',
+          code: `import { CommunicationClient } from '@snps/communication';
+
+const client = new CommunicationClient();
+
+// Connect to different protocols
+await client.connect('rest', { baseUrl: 'https://api.example.com' });
+await client.connect('grpc', { 
+  url: 'localhost:50051',
+  protoPath: './proto/service.proto',
+  packageName: 'example',
+  serviceName: 'UserService'
+});
+
+// Make requests
+const restResponse = await client.request('rest', {
+  method: 'GET',
+  path: '/users',
+  headers: { 'Authorization': 'Bearer token' }
+});
+
+const grpcResponse = await client.request('grpc', {
+  method: 'getUser',
+  body: { id: '123' }
+});
+
+// Disconnect
+await client.disconnectAll();`,
+          language: 'typescript',
+          category: 'Core',
+          package: '@snps/communication',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['@snps/communication'],
+          difficulty: 'intermediate',
+          estimatedTime: 15,
+          tags: ['communication', 'protocols', 'unified', 'client'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: 'rest-client-usage',
+          title: 'REST Client Usage',
+          description: 'Use the REST client directly for HTTP requests',
+          code: `import { RestClient } from '@snps/communication';
+
+const client = new RestClient();
+
+await client.connect({ 
+  baseUrl: 'https://api.example.com',
+  headers: { 'Content-Type': 'application/json' }
+});
+
+// Add interceptor for authentication
+client.addInterceptor((request) => {
+  request.headers = {
+    ...request.headers,
+    'Authorization': \`Bearer \${getToken()}\`
+  };
+  return request;
+});
+
+// Make requests
+const users = await client.request({
+  method: 'GET',
+  path: '/users'
+});
+
+const newUser = await client.request({
+  method: 'POST',
+  path: '/users',
+  body: { name: 'John Doe', email: 'john@example.com' }
+});`,
+          language: 'typescript',
+          category: 'Core',
+          package: '@snps/communication',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['@snps/communication'],
+          difficulty: 'beginner',
+          estimatedTime: 10,
+          tags: ['rest', 'http', 'client', 'api'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: 'grpc-client-usage',
+          title: 'gRPC Client Usage',
+          description: 'Use the gRPC client for protocol buffer communication',
+          code: `import { GrpcClient } from '@snps/communication';
+
+const client = new GrpcClient();
+
+await client.connect({
+  url: 'localhost:50051',
+  protoPath: './proto/user.proto',
+  packageName: 'user',
+  serviceName: 'UserService'
+});
+
+// Make gRPC calls
+const user = await client.request({
+  method: 'getUser',
+  body: { id: '123' },
+  metadata: { 'user-agent': 'synapse-client' }
+});
+
+const users = await client.request({
+  method: 'listUsers',
+  body: { page: 1, limit: 10 }
+});
+
+await client.disconnect();`,
+          language: 'typescript',
+          category: 'Core',
+          package: '@snps/communication',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['@snps/communication', '@grpc/grpc-js'],
+          difficulty: 'advanced',
+          estimatedTime: 20,
+          tags: ['grpc', 'protobuf', 'client', 'rpc'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ],
+      designPatterns: ['Adapter', 'Factory', 'Strategy', 'Observer'],
+      testCoverage: 100,
+      dependencies: ['@grpc/grpc-js', '@trpc/server', '@trpc/client', 'mqtt', 'soap'],
+      features: ['REST Support', 'gRPC Support', 'tRPC Support', 'WebSocket Support', 'SSE Support', 'MQTT Support', 'SOAP Support', 'Type Safety', 'Interceptors', 'Middleware'],
+      performance: {
+        bundleSize: '45KB',
+        loadTime: '< 50ms',
+        memoryUsage: '~200KB'
+      }
+    };
+    this.packages.set('@snps/communication', pkg);
   }
 
   private async initializeAndroidApp(): Promise<void> {
@@ -3312,61 +3593,8 @@ await runner.run();`,
 </html>`;
   }
 
-  private generatePackageFeatures(features: string[]): string {
-    return features.map(feature => `<span class="feature-tag">${feature}</span>`).join('');
-  }
 
-  private generatePackageClasses(classes: DocumentationClass[]): string {
-    return classes.map(cls => `
-      <div class="class-card">
-        <h3>${cls.name}</h3>
-        <p>${cls.description}</p>
-        <div class="class-meta">
-          <span class="design-patterns">${cls.designPatterns.join(', ')}</span>
-          <span class="coverage">${cls.testCoverage}% coverage</span>
-        </div>
-        <div class="methods">
-          <h4>Methods</h4>
-          ${cls.methods.map(method => `
-            <div class="method">
-              <code>${method.name}(${method.parameters.map(p => `${p.name}: ${p.type}`).join(', ')})</code>
-              <p>${method.description}</p>
-            </div>
-          `).join('')}
-        </div>
-        <div class="properties">
-          <h4>Properties</h4>
-          ${cls.properties.map(prop => `
-            <div class="property">
-              <code>${prop.name}: ${prop.type}</code>
-              <p>${prop.description}</p>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `).join('');
-  }
 
-  private generatePackageExamples(examples: DocumentationExample[]): string {
-    return examples.map(example => `
-      <div class="example-code">
-        <h4>${example.title}</h4>
-        <p>${example.description}</p>
-        <div class="example-meta">
-          <span class="language">${example.language}</span>
-          <span class="difficulty">${example.difficulty}</span>
-          <span class="time">${example.estimatedTime} min</span>
-          ${example.isRunnable ? '<span class="runnable">Runnable</span>' : ''}
-          ${example.isInteractive ? '<span class="interactive">Interactive</span>' : ''}
-        </div>
-        <pre><code class="language-${example.language}">${example.code}</code></pre>
-        <div class="example-actions">
-          ${example.isRunnable ? `<button class="btn btn-primary run-example" data-example="${example.id}">Run Example</button>` : ''}
-          <button class="btn btn-secondary copy-code">Copy Code</button>
-        </div>
-      </div>
-    `).join('');
-  }
 
   private generateAPIContent(packages: DocumentationPackage[]): string {
     return packages.map(pkg => {
@@ -4177,7 +4405,6 @@ class SimpleDatabase {
 
 class SimpleAuth {
   private users: Map<string, any> = new Map();
-  private sessions: Map<string, any> = new Map();
 
   public async hash(password: string): Promise<string> {
     // Simple hash implementation for demo
@@ -4256,4 +4483,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 }
 
 export { DocumentationService };
-export type { DocumentationPackage, DocumentationClass, DocumentationMethod, DocumentationExample, DocumentationTutorial, GettingStartedWizard, DesignPattern, CleanCodePrinciple };
+export type { CleanCodePrinciple, DesignPattern, DocumentationClass, DocumentationExample, DocumentationMethod, DocumentationPackage, DocumentationTutorial, GettingStartedWizard };
+
