@@ -127,6 +127,25 @@ runner.test('User creation', async () => {
 runner.run();`
       },
       {
+        title: "Client-Side Storage",
+        description: "Manage client-side storage with Synapse Storage.",
+        content: "Synapse provides a unified API for managing localStorage, sessionStorage, and IndexedDB with advanced features like expiration, encryption, and compression.",
+        codeExample: `import { LocalStorageManager } from '@snps/storage';
+
+const storage = new LocalStorageManager({
+  prefix: 'myapp-',
+  expiration: 24 * 60 * 60 * 1000, // 24 hours
+  compression: true,
+  encryption: true
+});
+
+// Set data
+await storage.set('user', { name: 'John', email: 'john@example.com' });
+
+// Get data
+const user = await storage.get('user');`
+      },
+      {
         title: "Advanced Features",
         description: "Explore Synapse's advanced capabilities.",
         content: "Synapse includes many advanced features like GraphQL, microservices, AI/ML integration, and more.",

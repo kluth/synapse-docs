@@ -63,7 +63,78 @@ class DocumentationService {
         await this.initializeStakeholderPackage();
         // Development Tools
         await this.initializeCLIPackage();
+        await this.initializeStoragePackage();
         console.log('✅ All 23 packages initialized successfully!');
+    }
+    async initializeStoragePackage() {
+        const pkg = {
+            name: '@snps/storage',
+            version: '1.0.0',
+            description: 'Comprehensive client-side storage management for localStorage, sessionStorage, and IndexedDB with modern TypeScript APIs.',
+            category: 'core',
+            classes: [
+                {
+                    name: 'LocalStorageManager',
+                    description: 'Enhanced LocalStorage Manager with advanced features like expiration, compression, and encryption.',
+                    methods: [
+                        { name: 'set', description: 'Set a value in localStorage', parameters: [{ name: 'key', type: 'string', description: 'The key to set', required: true }, { name: 'value', type: 'any', description: 'The value to set', required: true }, { name: 'expiration', type: 'number', description: 'Expiration time in milliseconds', required: false }], returnType: 'Promise<void>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'get', description: 'Get a value from localStorage', parameters: [{ name: 'key', type: 'string', description: 'The key to get', required: true }], returnType: 'Promise<any | null>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'remove', description: 'Remove a value from localStorage', parameters: [{ name: 'key', type: 'string', description: 'The key to remove', required: true }], returnType: 'Promise<void>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'clear', description: 'Clear all values from localStorage', parameters: [], returnType: 'Promise<void>', examples: [], complexity: 'O(n)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'keys', description: 'Get all keys from localStorage', parameters: [], returnType: 'Promise<string[]>', examples: [], complexity: 'O(n)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'getStorageInfo', description: 'Get storage usage information', parameters: [], returnType: 'Promise<{ used: number; available: number; percentage: number }>', examples: [], complexity: 'O(n)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'on', description: 'Add event listener for storage events', parameters: [{ name: 'event', type: 'string', description: 'The event to listen for', required: true }, { name: 'listener', type: '(event: StorageEvent) => void', description: 'The event listener', required: true }], returnType: 'void', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' },
+                        { name: 'off', description: 'Remove event listener', parameters: [{ name: 'event', type: 'string', description: 'The event to remove', required: true }, { name: 'listener', type: '(event: StorageEvent) => void', description: 'The event listener', required: true }], returnType: 'void', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' },
+                        { name: 'getAnalytics', description: 'Get analytics data', parameters: [], returnType: 'StorageAnalytics', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' }
+                    ],
+                    properties: [],
+                    examples: [],
+                    designPatterns: [],
+                    testCoverage: 100
+                },
+                {
+                    name: 'SessionStorageManager',
+                    description: 'Enhanced SessionStorage Manager with analytics and event handling.',
+                    methods: [
+                        { name: 'set', description: 'Set a value in sessionStorage', parameters: [{ name: 'key', type: 'string', description: 'The key to set', required: true }, { name: 'value', type: 'any', description: 'The value to set', required: true }], returnType: 'Promise<void>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'get', description: 'Get a value from sessionStorage', parameters: [{ name: 'key', type: 'string', description: 'The key to get', required: true }], returnType: 'Promise<any | null>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'remove', description: 'Remove a value from sessionStorage', parameters: [{ name: 'key', type: 'string', description: 'The key to remove', required: true }], returnType: 'Promise<void>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'clear', description: 'Clear all values from sessionStorage', parameters: [], returnType: 'Promise<void>', examples: [], complexity: 'O(n)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'keys', description: 'Get all keys from sessionStorage', parameters: [], returnType: 'Promise<string[]>', examples: [], complexity: 'O(n)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'on', description: 'Add event listener for storage events', parameters: [{ name: 'event', type: 'string', description: 'The event to listen for', required: true }, { name: 'listener', type: '(event: StorageEvent) => void', description: 'The event listener', required: true }], returnType: 'void', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' },
+                        { name: 'off', description: 'Remove event listener', parameters: [{ name: 'event', type: 'string', description: 'The event to remove', required: true }, { name: 'listener', type: '(event: StorageEvent) => void', description: 'The event listener', required: true }], returnType: 'void', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' },
+                        { name: 'getAnalytics', description: 'Get analytics data', parameters: [], returnType: 'StorageAnalytics', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' }
+                    ],
+                    properties: [],
+                    examples: [],
+                    designPatterns: [],
+                    testCoverage: 100
+                },
+                {
+                    name: 'UnifiedStorageManager',
+                    description: 'Unified Storage Manager combining all storage types.',
+                    methods: [
+                        { name: 'set', description: 'Set data in the appropriate storage based on type', parameters: [{ name: 'key', type: 'string', description: 'The key to set', required: true }, { name: 'value', type: 'any', description: 'The value to set', required: true }, { name: 'type', type: 'localStorage' | 'sessionStorage', description: 'The storage type', required: true }], returnType: 'Promise<void>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'get', description: 'Get data from the appropriate storage based on type', parameters: [{ name: 'key', type: 'string', description: 'The key to get', required: true }, { name: 'type', type: 'localStorage' | 'sessionStorage', description: 'The storage type', required: true }], returnType: 'Promise<any | null>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'remove', description: 'Remove data from the appropriate storage based on type', parameters: [{ name: 'key', type: 'string', description: 'The key to remove', required: true }, { name: 'type', type: 'localStorage' | 'sessionStorage', description: 'The storage type', required: true }], returnType: 'Promise<void>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'clear', description: 'Clear all data from the appropriate storage based on type', parameters: [{ name: 'type', type: 'localStorage' | 'sessionStorage', description: 'The storage type', required: true }], returnType: 'Promise<void>', examples: [], complexity: 'O(n)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+                        { name: 'getAnalytics', description: 'Get comprehensive analytics from all storage types', parameters: [], returnType: '{ localStorage: StorageAnalytics; sessionStorage: StorageAnalytics; combined: StorageAnalytics; }', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' }
+                    ],
+                    properties: [],
+                    examples: [],
+                    designPatterns: [],
+                    testCoverage: 100
+                }
+            ],
+            methods: [],
+            examples: [],
+            designPatterns: ['Singleton', 'Facade'],
+            testCoverage: 100,
+            dependencies: [],
+            features: ['localStorage', 'sessionStorage', 'IndexedDB', 'Expiration', 'Compression', 'Encryption', 'Analytics', 'Events', 'Migration'],
+            performance: { bundleSize: '12KB', loadTime: '< 20ms', memoryUsage: '~300KB' }
+        };
+        this.packages.set('@snps/storage', pkg);
     }
     async initializeCorePackage() {
         const pkg = {

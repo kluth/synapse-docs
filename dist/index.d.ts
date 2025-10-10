@@ -168,6 +168,7 @@ declare class DocumentationService {
     constructor();
     initialize(): Promise<void>;
     private initializeAllPackages;
+    private initializeStoragePackage;
     private initializeCorePackage;
     private initializeRoutingPackage;
     private initializeDatabasePackage;
