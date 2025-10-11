@@ -1,8 +1,5 @@
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
-import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { createServer, IncomingMessage, ServerResponse } from 'node:http';
-import { EventEmitter } from 'node:events';
 
 /**
  * Comprehensive Synapse Framework Documentation System
@@ -60,9 +57,11 @@ interface DocumentationMethod {
   since: string;
 }
 
+type StorageType = 'localStorage' | 'sessionStorage';
+
 interface DocumentationParameter {
   name: string;
-  type: string;
+  type: string | StorageType;
   description: string;
   required: boolean;
   defaultValue?: any;
@@ -188,9 +187,6 @@ class DocumentationService {
   private auth: SimpleAuth;
   private packages: Map<string, DocumentationPackage> = new Map();
   private examples: Map<string, DocumentationExample> = new Map();
-  private tutorials: Map<string, DocumentationTutorial> = new Map();
-  private designPatterns: Map<string, DesignPattern> = new Map();
-  private cleanCodePrinciples: Map<string, CleanCodePrinciple> = new Map();
   private wizard: GettingStartedWizard | null = null;
 
   constructor() {
@@ -214,7 +210,7 @@ class DocumentationService {
   // ============================================================================
 
   private async initializeAllPackages(): Promise<void> {
-    console.log('📦 Initializing all 23 Synapse packages...');
+    console.log('📦 Initializing all 25 Synapse packages...');
 
     // Core Packages
     await this.initializeCorePackage();
@@ -223,6 +219,8 @@ class DocumentationService {
     await this.initializeAuthPackage();
     await this.initializeTemplatingPackage();
     await this.initializeTestingPackage();
+    await this.initializeHttpClientPackage();
+    await this.initializeCommunicationPackage();
 
     // Enterprise Packages
     await this.initializeGraphQLPackage();
@@ -252,8 +250,909 @@ class DocumentationService {
 
     // Development Tools
     await this.initializeCLIPackage();
+    await this.initializeStoragePackage();
 
-    console.log('✅ All 23 packages initialized successfully!');
+    // Companion Apps
+    await this.initializeAndroidApp();
+
+    console.log('✅ All 25 packages and companion apps initialized successfully!');
+  }
+
+  private async initializeHttpClientPackage(): Promise<void> {
+    const pkg: DocumentationPackage = {
+      name: '@snps/http-client',
+      version: '0.1.0',
+      description: 'Zero-dependency HTTP client for modern web applications with fetch API, request/response interceptors, and TypeScript support.',
+      category: 'core',
+      classes: [
+        {
+          name: 'HttpClient',
+          description: 'Main HTTP client class with modern fetch API and zero dependencies',
+          methods: [
+            {
+              name: 'get',
+              description: 'Performs a GET request',
+              parameters: [
+                { name: 'url', type: 'string', description: 'Request URL', required: true },
+                { name: 'options', type: 'RequestOptions', description: 'Request options', required: false }
+              ],
+              returnType: 'Promise<Response>',
+              examples: ['const response = await client.get("/api/users");'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'post',
+              description: 'Performs a POST request',
+              parameters: [
+                { name: 'url', type: 'string', description: 'Request URL', required: true },
+                { name: 'data', type: 'any', description: 'Request body data', required: false },
+                { name: 'options', type: 'RequestOptions', description: 'Request options', required: false }
+              ],
+              returnType: 'Promise<Response>',
+              examples: ['const response = await client.post("/api/users", { name: "John" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'put',
+              description: 'Performs a PUT request',
+              parameters: [
+                { name: 'url', type: 'string', description: 'Request URL', required: true },
+                { name: 'data', type: 'any', description: 'Request body data', required: false },
+                { name: 'options', type: 'RequestOptions', description: 'Request options', required: false }
+              ],
+              returnType: 'Promise<Response>',
+              examples: ['const response = await client.put("/api/users/1", { name: "Jane" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'delete',
+              description: 'Performs a DELETE request',
+              parameters: [
+                { name: 'url', type: 'string', description: 'Request URL', required: true },
+                { name: 'options', type: 'RequestOptions', description: 'Request options', required: false }
+              ],
+              returnType: 'Promise<Response>',
+              examples: ['const response = await client.delete("/api/users/1");'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'patch',
+              description: 'Performs a PATCH request',
+              parameters: [
+                { name: 'url', type: 'string', description: 'Request URL', required: true },
+                { name: 'data', type: 'any', description: 'Request body data', required: false },
+                { name: 'options', type: 'RequestOptions', description: 'Request options', required: false }
+              ],
+              returnType: 'Promise<Response>',
+              examples: ['const response = await client.patch("/api/users/1", { name: "Updated" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'request',
+              description: 'Performs a custom HTTP request',
+              parameters: [
+                { name: 'options', type: 'RequestOptions', description: 'Complete request options', required: true }
+              ],
+              returnType: 'Promise<Response>',
+              examples: ['const response = await client.request({ method: "HEAD", url: "/api/status" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'addInterceptor',
+              description: 'Adds a request/response interceptor',
+              parameters: [
+                { name: 'interceptor', type: 'Interceptor', description: 'Interceptor function', required: true }
+              ],
+              returnType: 'void',
+              examples: ['client.addInterceptor((request) => { request.headers.Authorization = "Bearer token"; });'],
+              complexity: 'O(1)',
+              isAsync: false,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'setBaseURL',
+              description: 'Sets the base URL for all requests',
+              parameters: [
+                { name: 'baseURL', type: 'string', description: 'Base URL', required: true }
+              ],
+              returnType: 'void',
+              examples: ['client.setBaseURL("https://api.example.com");'],
+              complexity: 'O(1)',
+              isAsync: false,
+              isDeprecated: false,
+              since: '0.1.0'
+            },
+            {
+              name: 'setDefaultHeaders',
+              description: 'Sets default headers for all requests',
+              parameters: [
+                { name: 'headers', type: 'Record<string, string>', description: 'Default headers', required: true }
+              ],
+              returnType: 'void',
+              examples: ['client.setDefaultHeaders({ "Content-Type": "application/json" });'],
+              complexity: 'O(1)',
+              isAsync: false,
+              isDeprecated: false,
+              since: '0.1.0'
+            }
+          ],
+          properties: [
+            { name: 'baseURL', type: 'string', description: 'Base URL for requests', isReadonly: false, isOptional: true },
+            { name: 'defaultHeaders', type: 'Record<string, string>', description: 'Default headers', isReadonly: false, isOptional: true },
+            { name: 'timeout', type: 'number', description: 'Request timeout in milliseconds', isReadonly: false, isOptional: true }
+          ],
+          examples: ['const client = new HttpClient({ baseURL: "https://api.example.com" });'],
+          designPatterns: ['Builder', 'Chain of Responsibility'],
+          testCoverage: 100
+        }
+      ],
+      methods: [],
+      examples: [
+        {
+          id: 'basic-http-client',
+          title: 'Basic HTTP Client Usage',
+          description: 'Create and use the HTTP client for API requests',
+          code: `import { HttpClient } from '@snps/http-client';
+
+const client = new HttpClient({
+  baseURL: 'https://api.example.com',
+  timeout: 5000,
+  defaultHeaders: {
+    'Content-Type': 'application/json'
+  }
+});
+
+// GET request
+const users = await client.get('/users');
+
+// POST request
+const newUser = await client.post('/users', {
+  name: 'John Doe',
+  email: 'john@example.com'
+});
+
+// PUT request
+const updatedUser = await client.put('/users/1', {
+  name: 'Jane Doe'
+});
+
+// DELETE request
+await client.delete('/users/1');`,
+          language: 'typescript',
+          category: 'Core',
+          package: '@snps/http-client',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['@snps/http-client'],
+          difficulty: 'beginner',
+          estimatedTime: 10,
+          tags: ['http', 'client', 'fetch', 'api'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: 'http-client-interceptors',
+          title: 'HTTP Client with Interceptors',
+          description: 'Use interceptors for authentication and error handling',
+          code: `import { HttpClient } from '@snps/http-client';
+
+const client = new HttpClient();
+
+// Request interceptor for authentication
+client.addInterceptor((request) => {
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    request.headers.Authorization = \`Bearer \${token}\`;
+  }
+  return request;
+});
+
+// Response interceptor for error handling
+client.addInterceptor((response) => {
+  if (!response.ok) {
+    throw new Error(\`HTTP \${response.status}: \${response.statusText}\`);
+  }
+  return response;
+});
+
+// Usage
+try {
+  const data = await client.get('/protected-resource');
+  console.log(data);
+} catch (error) {
+  console.error('Request failed:', error.message);
+}`,
+          language: 'typescript',
+          category: 'Core',
+          package: '@snps/http-client',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['@snps/http-client'],
+          difficulty: 'intermediate',
+          estimatedTime: 15,
+          tags: ['http', 'client', 'interceptors', 'authentication', 'error-handling'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ],
+      designPatterns: ['Builder', 'Chain of Responsibility', 'Strategy'],
+      testCoverage: 100,
+      dependencies: [],
+      features: ['Zero Dependencies', 'Fetch API', 'TypeScript Support', 'Request/Response Interceptors', 'Timeout Support', 'Base URL', 'Default Headers', 'Error Handling'],
+      performance: {
+        bundleSize: '8KB',
+        loadTime: '< 10ms',
+        memoryUsage: '~50KB'
+      }
+    };
+    this.packages.set('@snps/http-client', pkg);
+  }
+
+  private async initializeCommunicationPackage(): Promise<void> {
+    const pkg: DocumentationPackage = {
+      name: '@snps/communication',
+      version: '1.0.0',
+      description: 'Unified communication package supporting all major protocols (REST, gRPC, tRPC, WebSocket, SSE, MQTT, SOAP) with strict TypeScript typing.',
+      category: 'core',
+      classes: [
+        {
+          name: 'CommunicationClient',
+          description: 'Unified client interface for all communication protocols',
+          methods: [
+            {
+              name: 'connect',
+              description: 'Connects to a specific protocol',
+              parameters: [
+                { name: 'protocol', type: 'ProtocolType', description: 'Protocol to connect to', required: true },
+                { name: 'config', type: 'ConnectionConfig', description: 'Connection configuration', required: true }
+              ],
+              returnType: 'Promise<void>',
+              examples: ['await client.connect("rest", { baseUrl: "https://api.example.com" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'request',
+              description: 'Makes a request using the specified protocol',
+              parameters: [
+                { name: 'protocol', type: 'ProtocolType', description: 'Protocol to use', required: true },
+                { name: 'request', type: 'UnifiedRequest', description: 'Request details', required: true }
+              ],
+              returnType: 'Promise<UnifiedResponse>',
+              examples: ['const response = await client.request("rest", { method: "GET", path: "/users" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'disconnect',
+              description: 'Disconnects from a specific protocol',
+              parameters: [
+                { name: 'protocol', type: 'ProtocolType', description: 'Protocol to disconnect from', required: true }
+              ],
+              returnType: 'Promise<void>',
+              examples: ['await client.disconnect("rest");'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'disconnectAll',
+              description: 'Disconnects from all protocols',
+              parameters: [],
+              returnType: 'Promise<void>',
+              examples: ['await client.disconnectAll();'],
+              complexity: 'O(n)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            }
+          ],
+          properties: [],
+          examples: ['const client = new CommunicationClient();'],
+          designPatterns: ['Adapter', 'Factory'],
+          testCoverage: 100
+        },
+        {
+          name: 'RestClient',
+          description: 'REST API client leveraging @snps/http-client',
+          methods: [
+            {
+              name: 'connect',
+              description: 'Connects to REST API',
+              parameters: [
+                { name: 'config', type: 'RestConfig', description: 'REST configuration', required: true }
+              ],
+              returnType: 'Promise<void>',
+              examples: ['await client.connect({ baseUrl: "https://api.example.com" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'request',
+              description: 'Makes HTTP request',
+              parameters: [
+                { name: 'request', type: 'UnifiedRequest', description: 'Request details', required: true }
+              ],
+              returnType: 'Promise<UnifiedResponse>',
+              examples: ['const response = await client.request({ method: "GET", path: "/users" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            }
+          ],
+          properties: [],
+          examples: ['const client = new RestClient();'],
+          designPatterns: ['Adapter'],
+          testCoverage: 100
+        },
+        {
+          name: 'GrpcClient',
+          description: 'gRPC client with protocol buffer support',
+          methods: [
+            {
+              name: 'connect',
+              description: 'Connects to gRPC service',
+              parameters: [
+                { name: 'config', type: 'GrpcConfig', description: 'gRPC configuration', required: true }
+              ],
+              returnType: 'Promise<void>',
+              examples: ['await client.connect({ url: "localhost:50051", protoPath: "./service.proto", packageName: "example", serviceName: "UserService" });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'request',
+              description: 'Makes gRPC call',
+              parameters: [
+                { name: 'request', type: 'UnifiedRequest', description: 'Request details', required: true }
+              ],
+              returnType: 'Promise<UnifiedResponse>',
+              examples: ['const response = await client.request({ method: "getUser", body: { id: "123" } });'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            }
+          ],
+          properties: [],
+          examples: ['const client = new GrpcClient();'],
+          designPatterns: ['Adapter'],
+          testCoverage: 100
+        }
+      ],
+      methods: [],
+      examples: [
+        {
+          id: 'unified-client-usage',
+          title: 'Unified Communication Client',
+          description: 'Use the unified client to connect to multiple protocols',
+          code: `import { CommunicationClient } from '@snps/communication';
+
+const client = new CommunicationClient();
+
+// Connect to different protocols
+await client.connect('rest', { baseUrl: 'https://api.example.com' });
+await client.connect('grpc', { 
+  url: 'localhost:50051',
+  protoPath: './proto/service.proto',
+  packageName: 'example',
+  serviceName: 'UserService'
+});
+
+// Make requests
+const restResponse = await client.request('rest', {
+  method: 'GET',
+  path: '/users',
+  headers: { 'Authorization': 'Bearer token' }
+});
+
+const grpcResponse = await client.request('grpc', {
+  method: 'getUser',
+  body: { id: '123' }
+});
+
+// Disconnect
+await client.disconnectAll();`,
+          language: 'typescript',
+          category: 'Core',
+          package: '@snps/communication',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['@snps/communication'],
+          difficulty: 'intermediate',
+          estimatedTime: 15,
+          tags: ['communication', 'protocols', 'unified', 'client'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: 'rest-client-usage',
+          title: 'REST Client Usage',
+          description: 'Use the REST client directly for HTTP requests',
+          code: `import { RestClient } from '@snps/communication';
+
+const client = new RestClient();
+
+await client.connect({ 
+  baseUrl: 'https://api.example.com',
+  headers: { 'Content-Type': 'application/json' }
+});
+
+// Add interceptor for authentication
+client.addInterceptor((request) => {
+  request.headers = {
+    ...request.headers,
+    'Authorization': \`Bearer \${getToken()}\`
+  };
+  return request;
+});
+
+// Make requests
+const users = await client.request({
+  method: 'GET',
+  path: '/users'
+});
+
+const newUser = await client.request({
+  method: 'POST',
+  path: '/users',
+  body: { name: 'John Doe', email: 'john@example.com' }
+});`,
+          language: 'typescript',
+          category: 'Core',
+          package: '@snps/communication',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['@snps/communication'],
+          difficulty: 'beginner',
+          estimatedTime: 10,
+          tags: ['rest', 'http', 'client', 'api'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: 'grpc-client-usage',
+          title: 'gRPC Client Usage',
+          description: 'Use the gRPC client for protocol buffer communication',
+          code: `import { GrpcClient } from '@snps/communication';
+
+const client = new GrpcClient();
+
+await client.connect({
+  url: 'localhost:50051',
+  protoPath: './proto/user.proto',
+  packageName: 'user',
+  serviceName: 'UserService'
+});
+
+// Make gRPC calls
+const user = await client.request({
+  method: 'getUser',
+  body: { id: '123' },
+  metadata: { 'user-agent': 'synapse-client' }
+});
+
+const users = await client.request({
+  method: 'listUsers',
+  body: { page: 1, limit: 10 }
+});
+
+await client.disconnect();`,
+          language: 'typescript',
+          category: 'Core',
+          package: '@snps/communication',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['@snps/communication', '@grpc/grpc-js'],
+          difficulty: 'advanced',
+          estimatedTime: 20,
+          tags: ['grpc', 'protobuf', 'client', 'rpc'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ],
+      designPatterns: ['Adapter', 'Factory', 'Strategy', 'Observer'],
+      testCoverage: 100,
+      dependencies: ['@grpc/grpc-js', '@trpc/server', '@trpc/client', 'mqtt', 'soap'],
+      features: ['REST Support', 'gRPC Support', 'tRPC Support', 'WebSocket Support', 'SSE Support', 'MQTT Support', 'SOAP Support', 'Type Safety', 'Interceptors', 'Middleware'],
+      performance: {
+        bundleSize: '45KB',
+        loadTime: '< 50ms',
+        memoryUsage: '~200KB'
+      }
+    };
+    this.packages.set('@snps/communication', pkg);
+  }
+
+  private async initializeAndroidApp(): Promise<void> {
+    const pkg: DocumentationPackage = {
+      name: 'Synapse Monitor Android',
+      version: '1.0.0',
+      description: 'Real-time monitoring application for Synapse framework servers, providing instant visibility into server health, performance metrics, and logs from Android phones and Wear OS smartwatches.',
+      category: 'companion',
+      classes: [
+        {
+          name: 'DashboardViewModel',
+          description: 'Main ViewModel for the dashboard screen with real-time data updates and alert management',
+          methods: [
+            {
+              name: 'connectToServer',
+              description: 'Connects to a Synapse server and starts real-time monitoring',
+              parameters: [
+                { name: 'config', type: 'ServerConfig', description: 'Server configuration', required: true }
+              ],
+              returnType: 'void',
+              examples: ['viewModel.connectToServer(serverConfig);'],
+              complexity: 'O(1)',
+              isAsync: false,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'refresh',
+              description: 'Manually refreshes monitoring data',
+              parameters: [],
+              returnType: 'void',
+              examples: ['viewModel.refresh();'],
+              complexity: 'O(1)',
+              isAsync: false,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'checkAlerts',
+              description: 'Checks current data against alert thresholds',
+              parameters: [
+                { name: 'data', type: 'MonitoringData', description: 'Current monitoring data', required: true }
+              ],
+              returnType: 'void',
+              examples: ['viewModel.checkAlerts(monitoringData);'],
+              complexity: 'O(n)',
+              isAsync: false,
+              isDeprecated: false,
+              since: '1.0.0'
+            }
+          ],
+          properties: [
+            { name: 'uiState', type: 'StateFlow<DashboardUiState>', description: 'Current UI state', isReadonly: true, isOptional: false },
+            { name: 'alerts', type: 'StateFlow<List<Alert>>', description: 'Current alerts', isReadonly: true, isOptional: false }
+          ],
+          examples: ['val viewModel: DashboardViewModel = hiltViewModel()'],
+          designPatterns: ['MVVM', 'Observer'],
+          testCoverage: 100
+        },
+        {
+          name: 'MonitoringRepository',
+          description: 'Repository for managing monitoring data with SSE streaming and local caching',
+          methods: [
+            {
+              name: 'observeMonitoringData',
+              description: 'Observes real-time monitoring data from server',
+              parameters: [
+                { name: 'serverConfig', type: 'ServerConfig', description: 'Server configuration', required: true }
+              ],
+              returnType: 'Flow<MonitoringData>',
+              examples: ['repository.observeMonitoringData(serverConfig).collect { data -> /* handle */ }'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            },
+            {
+              name: 'getHistoricalData',
+              description: 'Retrieves historical monitoring data',
+              parameters: [
+                { name: 'serverId', type: 'string', description: 'Server identifier', required: true },
+                { name: 'startTime', type: 'long', description: 'Start timestamp', required: true }
+              ],
+              returnType: 'List<MonitoringData>',
+              examples: ['val history = repository.getHistoricalData("server-1", startTime)'],
+              complexity: 'O(n)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            }
+          ],
+          properties: [],
+          examples: ['val repository: MonitoringRepository = hiltViewModel()'],
+          designPatterns: ['Repository', 'Observer'],
+          testCoverage: 100
+        },
+        {
+          name: 'SSEClient',
+          description: 'Server-Sent Events client for real-time data streaming',
+          methods: [
+            {
+              name: 'connect',
+              description: 'Connects to SSE stream and returns data flow',
+              parameters: [
+                { name: 'url', type: 'string', description: 'SSE stream URL', required: true }
+              ],
+              returnType: 'Flow<MonitoringData>',
+              examples: ['sseClient.connect("/api/stream").collect { data -> /* handle */ }'],
+              complexity: 'O(1)',
+              isAsync: true,
+              isDeprecated: false,
+              since: '1.0.0'
+            }
+          ],
+          properties: [],
+          examples: ['val sseClient = SSEClient(httpClient)'],
+          designPatterns: ['Observer', 'Stream'],
+          testCoverage: 100
+        }
+      ],
+      methods: [],
+      examples: [
+        {
+          id: 'android-dashboard-screen',
+          title: 'Android Dashboard Screen',
+          description: 'Create the main dashboard screen with real-time monitoring data',
+          code: `@Composable
+fun DashboardScreen(
+    viewModel: DashboardViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+    val alerts by viewModel.alerts.collectAsState()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Synapse Monitor") },
+                actions = {
+                    IconButton(onClick = { viewModel.refresh() }) {
+                        Icon(Icons.Default.Refresh, "Refresh")
+                    }
+                }
+            )
+        }
+    ) { padding ->
+        when (uiState) {
+            is DashboardUiState.Loading -> LoadingView()
+            is DashboardUiState.Success -> {
+                val data = (uiState as DashboardUiState.Success).data
+                DashboardContent(
+                    data = data,
+                    alerts = alerts,
+                    modifier = Modifier.padding(padding)
+                )
+            }
+            is DashboardUiState.Error -> ErrorView()
+        }
+    }
+}`,
+          language: 'kotlin',
+          category: 'Companion',
+          package: 'Synapse Monitor Android',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['Jetpack Compose', 'Hilt', 'Material 3'],
+          difficulty: 'intermediate',
+          estimatedTime: 20,
+          tags: ['android', 'compose', 'mvvm', 'monitoring'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: 'android-sse-client',
+          title: 'SSE Client Implementation',
+          description: 'Implement Server-Sent Events client for real-time data streaming',
+          code: `class SSEClient(
+    private val httpClient: HttpClient
+) {
+    fun connect(url: String): Flow<MonitoringData> = flow {
+        httpClient.prepareGet(url).execute { response ->
+            val channel: ByteReadChannel = response.body()
+
+            while (!channel.isClosedForRead) {
+                val line = channel.readUTF8Line() ?: continue
+
+                if (line.startsWith("data: ")) {
+                    val jsonData = line.substring(6)
+                    val data = Json.decodeFromString<MonitoringData>(jsonData)
+                    emit(data)
+                }
+            }
+        }
+    }.catch { e ->
+        Log.e("SSEClient", "Connection error", e)
+        throw e
+    }
+}`,
+          language: 'kotlin',
+          category: 'Companion',
+          package: 'Synapse Monitor Android',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['Ktor', 'Kotlinx Serialization'],
+          difficulty: 'advanced',
+          estimatedTime: 25,
+          tags: ['android', 'sse', 'streaming', 'ktor'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: 'android-wear-os-tile',
+          title: 'Wear OS Tile Implementation',
+          description: 'Create a Wear OS tile for quick server status monitoring',
+          code: `class SynapseMonitorTileService : TileService() {
+
+    override suspend fun tileRequest(requestParams: RequestBuilders.TileRequest): Tile {
+        val data = getLatestMonitoringData()
+
+        return Tile.Builder()
+            .setResourcesVersion(RESOURCES_VERSION)
+            .setTileTimeline(
+                Timeline.Builder()
+                    .addTimelineEntry(
+                        TimelineEntry.Builder()
+                            .setLayout(
+                                Layout.Builder()
+                                    .setRoot(createTileLayout(data))
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .build()
+            )
+            .setFreshnessIntervalMillis(30_000) // Refresh every 30s
+            .build()
+    }
+
+    private fun createTileLayout(data: MonitoringData): LayoutElement {
+        return Column.Builder()
+            .setWidth(expand())
+            .setHeight(expand())
+            .addContent(
+                // Status header
+                Row.Builder()
+                    .addContent(
+                        Image.Builder()
+                            .setResourceId(getStatusIcon(data.server.status))
+                            .setWidth(dp(24f))
+                            .setHeight(dp(24f))
+                            .build()
+                    )
+                    .addContent(
+                        Text.Builder()
+                            .setText(data.server.status.name)
+                            .setFontStyle(
+                                FontStyle.Builder()
+                                    .setColor(argb(getStatusColor(data.server.status)))
+                                    .setSize(sp(18f))
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .build()
+            )
+            .build()
+    }
+}`,
+          language: 'kotlin',
+          category: 'Companion',
+          package: 'Synapse Monitor Android',
+          isRunnable: true,
+          isInteractive: true,
+          dependencies: ['Wear OS', 'Compose for Wear OS'],
+          difficulty: 'advanced',
+          estimatedTime: 30,
+          tags: ['android', 'wear-os', 'tile', 'compose'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ],
+      designPatterns: ['MVVM', 'Repository', 'Observer', 'Clean Architecture'],
+      testCoverage: 100,
+      dependencies: ['Jetpack Compose', 'Hilt', 'Ktor', 'Room', 'DataStore', 'Material 3'],
+      features: ['Real-time Monitoring', 'SSE Streaming', 'Wear OS Support', 'Push Notifications', 'Offline Caching', 'Material 3 UI', 'MVVM Architecture'],
+      performance: {
+        bundleSize: '10MB',
+        loadTime: '< 200ms',
+        memoryUsage: '~50MB'
+      }
+    };
+    this.packages.set('Synapse Monitor Android', pkg);
+  }
+
+  private async initializeStoragePackage(): Promise<void> {
+    const pkg: DocumentationPackage = {
+      name: '@snps/storage',
+      version: '1.0.0',
+      description: 'Comprehensive client-side storage management for localStorage, sessionStorage, and IndexedDB with modern TypeScript APIs.',
+      category: 'core',
+      classes: [
+        {
+          name: 'LocalStorageManager',
+          description: 'Enhanced LocalStorage Manager with advanced features like expiration, compression, and encryption.',
+          methods: [
+            { name: 'set', description: 'Set a value in localStorage', parameters: [{name: 'key', type: 'string', description: 'The key to set', required: true}, {name: 'value', type: 'any', description: 'The value to set', required: true}, {name: 'expiration', type: 'number', description: 'Expiration time in milliseconds', required: false}], returnType: 'Promise<void>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'get', description: 'Get a value from localStorage', parameters: [{name: 'key', type: 'string', description: 'The key to get', required: true}], returnType: 'Promise<any | null>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'remove', description: 'Remove a value from localStorage', parameters: [{name: 'key', type: 'string', description: 'The key to remove', required: true}], returnType: 'Promise<void>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'clear', description: 'Clear all values from localStorage', parameters: [], returnType: 'Promise<void>', examples: [], complexity: 'O(n)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'keys', description: 'Get all keys from localStorage', parameters: [], returnType: 'Promise<string[]>', examples: [], complexity: 'O(n)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'getStorageInfo', description: 'Get storage usage information', parameters: [], returnType: 'Promise<{ used: number; available: number; percentage: number }>', examples: [], complexity: 'O(n)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'on', description: 'Add event listener for storage events', parameters: [{name: 'event', type: 'string', description: 'The event to listen for', required: true}, {name: 'listener', type: '(event: StorageEvent) => void', description: 'The event listener', required: true}], returnType: 'void', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' },
+            { name: 'off', description: 'Remove event listener', parameters: [{name: 'event', type: 'string', description: 'The event to remove', required: true}, {name: 'listener', type: '(event: StorageEvent) => void', description: 'The event listener', required: true}], returnType: 'void', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' },
+            { name: 'getAnalytics', description: 'Get analytics data', parameters: [], returnType: 'StorageAnalytics', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' }
+          ],
+          properties: [],
+          examples: [],
+          designPatterns: [],
+          testCoverage: 100
+        },
+        {
+          name: 'SessionStorageManager',
+          description: 'Enhanced SessionStorage Manager with analytics and event handling.',
+          methods: [
+            { name: 'set', description: 'Set a value in sessionStorage', parameters: [{name: 'key', type: 'string', description: 'The key to set', required: true}, {name: 'value', type: 'any', description: 'The value to set', required: true}], returnType: 'Promise<void>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'get', description: 'Get a value from sessionStorage', parameters: [{name: 'key', type: 'string', description: 'The key to get', required: true}], returnType: 'Promise<any | null>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'remove', description: 'Remove a value from sessionStorage', parameters: [{name: 'key', type: 'string', description: 'The key to remove', required: true}], returnType: 'Promise<void>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'clear', description: 'Clear all values from sessionStorage', parameters: [], returnType: 'Promise<void>', examples: [], complexity: 'O(n)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'keys', description: 'Get all keys from sessionStorage', parameters: [], returnType: 'Promise<string[]>', examples: [], complexity: 'O(n)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'on', description: 'Add event listener for storage events', parameters: [{name: 'event', type: 'string', description: 'The event to listen for', required: true}, {name: 'listener', type: '(event: StorageEvent) => void', description: 'The event listener', required: true}], returnType: 'void', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' },
+            { name: 'off', description: 'Remove event listener', parameters: [{name: 'event', type: 'string', description: 'The event to remove', required: true}, {name: 'listener', type: '(event: StorageEvent) => void', description: 'The event listener', required: true}], returnType: 'void', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' },
+            { name: 'getAnalytics', description: 'Get analytics data', parameters: [], returnType: 'StorageAnalytics', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' }
+          ],
+          properties: [],
+          examples: [],
+          designPatterns: [],
+          testCoverage: 100
+        },
+        {
+          name: 'UnifiedStorageManager',
+          description: 'Unified Storage Manager combining all storage types.',
+          methods: [
+            { name: 'set', description: 'Set data in the appropriate storage based on type', parameters: [{name: 'key', type: 'string', description: 'The key to set', required: true}, {name: 'value', type: 'any', description: 'The value to set', required: true}, {name: 'type', type: "'localStorage' | 'sessionStorage'", description: 'The storage type', required: true}], returnType: 'Promise<void>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'get', description: 'Get data from the appropriate storage based on type', parameters: [{name: 'key', type: 'string', description: 'The key to get', required: true}, {name: 'type', type: 'StorageType', description: 'The storage type', required: true}], returnType: 'Promise<any | null>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'remove', description: 'Remove data from the appropriate storage based on type', parameters: [{name: 'key', type: 'string', description: 'The key to remove', required: true}, {name: 'type', type: 'StorageType', description: 'The storage type', required: true}], returnType: 'Promise<void>', examples: [], complexity: 'O(1)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'clear', description: 'Clear all data from the appropriate storage based on type', parameters: [{name: 'type', type: 'StorageType', description: 'The storage type', required: true}], returnType: 'Promise<void>', examples: [], complexity: 'O(n)', isAsync: true, isDeprecated: false, since: '1.0.0' },
+            { name: 'getAnalytics', description: 'Get comprehensive analytics from all storage types', parameters: [], returnType: '{ localStorage: StorageAnalytics; sessionStorage: StorageAnalytics; combined: StorageAnalytics; }', examples: [], complexity: 'O(1)', isAsync: false, isDeprecated: false, since: '1.0.0' }
+          ],
+          properties: [],
+          examples: [],
+          designPatterns: [],
+          testCoverage: 100
+        }
+      ],
+      methods: [],
+      examples: [],
+      designPatterns: ['Singleton', 'Facade'],
+      testCoverage: 100,
+      dependencies: [],
+      features: ['localStorage', 'sessionStorage', 'IndexedDB', 'Expiration', 'Compression', 'Encryption', 'Analytics', 'Events', 'Migration'],
+      performance: { bundleSize: '12KB', loadTime: '< 20ms', memoryUsage: '~300KB' }
+    };
+    this.packages.set('@snps/storage', pkg);
   }
 
   private async initializeCorePackage(): Promise<void> {
@@ -2694,61 +3593,8 @@ await runner.run();`,
 </html>`;
   }
 
-  private generatePackageFeatures(features: string[]): string {
-    return features.map(feature => `<span class="feature-tag">${feature}</span>`).join('');
-  }
 
-  private generatePackageClasses(classes: DocumentationClass[]): string {
-    return classes.map(cls => `
-      <div class="class-card">
-        <h3>${cls.name}</h3>
-        <p>${cls.description}</p>
-        <div class="class-meta">
-          <span class="design-patterns">${cls.designPatterns.join(', ')}</span>
-          <span class="coverage">${cls.testCoverage}% coverage</span>
-        </div>
-        <div class="methods">
-          <h4>Methods</h4>
-          ${cls.methods.map(method => `
-            <div class="method">
-              <code>${method.name}(${method.parameters.map(p => `${p.name}: ${p.type}`).join(', ')})</code>
-              <p>${method.description}</p>
-            </div>
-          `).join('')}
-        </div>
-        <div class="properties">
-          <h4>Properties</h4>
-          ${cls.properties.map(prop => `
-            <div class="property">
-              <code>${prop.name}: ${prop.type}</code>
-              <p>${prop.description}</p>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `).join('');
-  }
 
-  private generatePackageExamples(examples: DocumentationExample[]): string {
-    return examples.map(example => `
-      <div class="example-code">
-        <h4>${example.title}</h4>
-        <p>${example.description}</p>
-        <div class="example-meta">
-          <span class="language">${example.language}</span>
-          <span class="difficulty">${example.difficulty}</span>
-          <span class="time">${example.estimatedTime} min</span>
-          ${example.isRunnable ? '<span class="runnable">Runnable</span>' : ''}
-          ${example.isInteractive ? '<span class="interactive">Interactive</span>' : ''}
-        </div>
-        <pre><code class="language-${example.language}">${example.code}</code></pre>
-        <div class="example-actions">
-          ${example.isRunnable ? `<button class="btn btn-primary run-example" data-example="${example.id}">Run Example</button>` : ''}
-          <button class="btn btn-secondary copy-code">Copy Code</button>
-        </div>
-      </div>
-    `).join('');
-  }
 
   private generateAPIContent(packages: DocumentationPackage[]): string {
     return packages.map(pkg => {
@@ -3559,7 +4405,6 @@ class SimpleDatabase {
 
 class SimpleAuth {
   private users: Map<string, any> = new Map();
-  private sessions: Map<string, any> = new Map();
 
   public async hash(password: string): Promise<string> {
     // Simple hash implementation for demo
@@ -3638,4 +4483,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 }
 
 export { DocumentationService };
-export type { DocumentationPackage, DocumentationClass, DocumentationMethod, DocumentationExample, DocumentationTutorial, GettingStartedWizard, DesignPattern, CleanCodePrinciple };
+export type { CleanCodePrinciple, DesignPattern, DocumentationClass, DocumentationExample, DocumentationMethod, DocumentationPackage, DocumentationTutorial, GettingStartedWizard };
+
